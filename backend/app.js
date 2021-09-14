@@ -1,24 +1,26 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+require('dotenv').config();
+
+const userRoutes = require('./Routes/user');
 
 const app = express();
 
-app.use((req, res, next) => {
-  console.log('Requête reçue !');
-  next();
+app.use(cors());
+
+app.use(bodyParser.json());
+
+app.post('/api/user', (req, res, next) => {
+    console.log(req.body);
+    res.status(201).json({
+        message: 'je tente sans sequelize ni mysql'
+    });
 });
 
-app.use((req, res, next) => {
-  res.status(201);
-  next();
-});
 
-app.use((req, res, next) => {
-  res.json({ message: 'Votre requête a bien été reçue !' });
-  next();
-});
+app.use('api/user', userRoutes);
 
-app.use((req, res, next) => {
-  console.log('Réponse envoyée avec succès !');
-});
 
 module.exports = app;
