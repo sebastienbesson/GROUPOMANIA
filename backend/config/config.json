@@ -1,22 +1,22 @@
 {
   "development": {
     "username": "root",
-    "password": "sebastien",
-    "database": "database_development",
+    "password": null,
+    "database": "database_development_groupomania",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "sebastien",
-    "database": "database_test",
+    "password": null,
+    "database": "database_test_groupomania",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": "sebastien",
-    "database": "database_production",
+    "password": null,
+    "database": "database_production_groupomania",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }
