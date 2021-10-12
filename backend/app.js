@@ -12,6 +12,7 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
+
 /*app.post('/api/user', (req, res, next) => {
     console.log(req.body);
     res.status(201).json({
@@ -19,8 +20,6 @@ app.use(bodyParser.json());
     });
 });*/
 
-
-app.use('api/user', userRoutes);
-
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
