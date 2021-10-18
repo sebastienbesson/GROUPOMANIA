@@ -22,7 +22,7 @@ exports.signup = (req, res, next) => {
 
 exports.login = (req, res, next) => {
   console.log('email',req.body.email);
-  models.User.findOne({ email: req.body.email })
+  models.User.findOne({ where: {email : req.body.email }})
     .then(User => {
       if (!User) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' });
@@ -32,20 +32,32 @@ exports.login = (req, res, next) => {
           if (!valid) {
             return res.status(401).json({ error: 'Mot de passe incorrect !' });
           }
-          res.status(200).json({
+          {console.log('utilisateur trouvé');res.status(200).json({
             userId: User._id,
             token: jwt.sign(
                 { userId: User._id },
                 process.env.SECRET_CODE,
                 { expiresIn: '24h'}
             )
-          });
+          })};
         })
         .catch(error => res.status(500).json({ message: 'erreur A' }));
     })
     .catch(error => res.status(500).json({ message : 'erreur B' }));
 };  
- 
+
+exports.delete = (req, res, next) => {
+	models.User.findOne(req.params.email)
+		.then(user => {
+			if(user !== null) {
+				user.destroy()
+					.then(() => res.status(201).json({ message: 'Utilisateur supprimé!' }))
+					.catch(error => res.status(500).json({ error }));
+			}
+		})
+		.catch(error => res.status(401).json({ error }));
+};
+
 
 
 
