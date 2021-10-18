@@ -22,6 +22,7 @@ exports.signup = (req, res, next) => {
 
 exports.login = (req, res, next) => {
   console.log('email',req.body.email);
+  console.log('password',req.body.password);
   models.User.findOne({ where: {email : req.body.email }})
     .then(User => {
       if (!User) {
@@ -33,9 +34,9 @@ exports.login = (req, res, next) => {
             return res.status(401).json({ error: 'Mot de passe incorrect !' });
           }
           {console.log('utilisateur trouvé');res.status(200).json({
-            userId: User._id,
+            userId: User.id,
             token: jwt.sign(
-                { userId: User._id },
+                { userId: User.id },
                 process.env.SECRET_CODE,
                 { expiresIn: '24h'}
             )
@@ -46,8 +47,38 @@ exports.login = (req, res, next) => {
     .catch(error => res.status(500).json({ message : 'erreur B' }));
 };  
 
+exports.modify = (req, res, next) => {
+  console.log('req.userId', req.userId);
+  userId=req.userId 
+	models.User.findOne({ where: {email : req.body.email }})
+		.then(user => {
+			if(req.body.password) { 
+				bcrypt.genSalt(10, function(err, salt) {
+					bcrypt.hash(req.body.password, salt, function(err, hash) {
+						user.name = req.body.name
+						user.password = hash
+						user.email = req.body.email
+						
+						user.save()
+							.then(() => res.status(201).json({ message: 'mot de passe modifié!' }))
+							.catch(error => res.status(500).json({ error: 'ERREUR A'}));
+					})
+				})
+			}else{
+				user.name = req.body.name
+				user.email = req.body.email
+				
+				user.save()
+					.then(() => res.status(201).json({ message: 'Profil modifié!' }))
+					.catch(error => res.status(500).json({ error: 'ERREUR B' }));
+			}
+		})
+		.catch(error => res.status(500).json({ error: 'ERREUR C' }));
+};
+
 exports.delete = (req, res, next) => {
-	models.User.findOne(req.params.email)
+  console.log('req.userId', req.userId);
+	models.User.findOne({where :{id:req.userId}})
 		.then(user => {
 			if(user !== null) {
 				user.destroy()
