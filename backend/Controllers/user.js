@@ -58,7 +58,6 @@ exports.modify = (req, res, next) => {
 						user.name = req.body.name
 						user.password = hash
 						user.email = req.body.email
-						
 						user.save()
 							.then(() => res.status(201).json({ message: 'mot de passe modifié!' }))
 							.catch(error => res.status(500).json({ error: 'ERREUR A'}));
@@ -67,7 +66,6 @@ exports.modify = (req, res, next) => {
 			}else{
 				user.name = req.body.name
 				user.email = req.body.email
-				
 				user.save()
 					.then(() => res.status(201).json({ message: 'Profil modifié!' }))
 					.catch(error => res.status(500).json({ error: 'ERREUR B' }));
@@ -86,7 +84,7 @@ exports.delete = (req, res, next) => {
 					.catch(error => res.status(500).json({ error }));
 			}
 		})
-		.catch(error => res.status(401).json({ error }));
+		.catch(error => res.status(401).json({ message: 'Suppression non autorisée!' }));
 };
 
 
