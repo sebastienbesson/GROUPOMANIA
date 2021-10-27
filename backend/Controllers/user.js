@@ -80,7 +80,7 @@ exports.delete = (req, res, next) => {
 		.then(user => {
 			if(user !== null) {
 				user.destroy()
-					.then(() => res.status(201).json({ message: 'Utilisateur supprimé!' }))
+					.then(() => res.status(200).json({ message: 'Utilisateur supprimé!' }))
 					.catch(error => res.status(500).json({ error }));
 			}
 		})
