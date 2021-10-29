@@ -49,7 +49,7 @@ exports.deleteOnePost = (req, res, next) => {
   console.log('req.userId', req.userId);
 	models.Post.findOne({where :{id:req.body.id}})
 		.then(post => {
-			if(post !== null) {
+			if(post !== null && req.body.userId==userId) {
 				post.destroy({where : {id:req.body.id}})
 					.then(() => res.status(200).json({ message: 'Post supprimé!' }))
 					.catch(error => res.status(500).json({ message: 'Post non supprimé' }));

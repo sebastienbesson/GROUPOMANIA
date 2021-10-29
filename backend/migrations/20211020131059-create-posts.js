@@ -12,6 +12,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      userId: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       title: {
         allowNull: false,
         type: Sequelize.STRING
@@ -41,4 +45,4 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('posts');
   }
-};
+}; 
