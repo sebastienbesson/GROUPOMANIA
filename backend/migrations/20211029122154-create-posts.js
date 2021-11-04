@@ -8,13 +8,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      userId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
+      },
       name: {
         allowNull: false,
         type: Sequelize.STRING
-      },
-      userId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
       },
       title: {
         allowNull: false,
@@ -24,7 +28,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      contentURL: {
+      contentUrl: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -45,4 +49,4 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('posts');
   }
-}; 
+};

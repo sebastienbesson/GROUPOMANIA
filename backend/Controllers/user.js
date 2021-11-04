@@ -10,7 +10,7 @@ exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
       .then(hash => {
         models.User.create({
-          name: req.body.name,
+          userName: req.body.userName,
           email: req.body.email,
           password: hash
         })
@@ -55,11 +55,11 @@ exports.modify = (req, res, next) => {
 			if(req.body.password) { 
 				bcrypt.genSalt(10, function(err, salt) {
 					bcrypt.hash(req.body.password, salt, function(err, hash) {
-						user.name = req.body.name
+						user.userName = req.body.userName
 						user.password = hash
 						user.email = req.body.email
 						user.save()
-							.then(() => res.status(201).json({ message: 'mot de passe modifié!' }))
+							.then(() => res.status(201).json({ message: 'information(s) modifiée(s)!' }))
 							.catch(error => res.status(500).json({ error: 'ERREUR A'}));
 					})
 				})

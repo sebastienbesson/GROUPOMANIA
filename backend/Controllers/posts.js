@@ -3,6 +3,8 @@ const fs = require('fs');
 const models = require('../models');
 const posts = require('../models/posts');
 
+
+
 exports.createPost = (req, res, next) => {
       delete req.body.id;
       console.log('models',models);
@@ -32,7 +34,13 @@ exports.getAllPosts = (req, res, next) => {
 };
 
 exports.getOnePost = (req, res, next) => {
-  models.Post.findOne({ where: {id:req.params.id}})
+  models.Post.findOne({ 
+      where: {id:req.params.id},
+      include: {
+        model: models.User,
+        attributes: ["userName"]
+      },
+    })
     .then(function(post) {
     if (post) {
       res.status(200).json(post);
@@ -41,8 +49,20 @@ exports.getOnePost = (req, res, next) => {
     }
   }).catch(function(err) {
       console.log(err);
-      res.status(500).json({"erro": "champs non valides"});
+      res.status(500).json({"error": "champs non valides"});
   });
+};
+
+exports.getAllPostsForOne = (req, res, next) => {
+  let list = ""
+  models.Post.findAll({ 
+      where: { id: req.params.id },
+  })
+  .then((res) => { 
+      list = res;
+      res.status(200).json( { list } )
+  })
+  .catch((error) => { res.status(404).json({ "error" : "pas de posts trouvés pour la personne" })})
 };
 
 exports.deleteOnePost = (req, res, next) => {
