@@ -1,14 +1,13 @@
-import logo from '../logo&title.svg'; 
 import Header from './Header';
+import Connecting from './Connecting';
 
 function App() {
   return (
     <div>
-      <Header>
-     
-      </Header>
+      <Header />
+      <Connecting />
     </div>
-  );
+  )
 }
 
 export default App;
