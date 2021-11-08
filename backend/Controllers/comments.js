@@ -3,8 +3,9 @@ const comments = require('../models/comments');
 
 exports.createComment = (req, res, next) => {
       delete req.body.id;
-      console.log('models',models);
       models.Comment.create ({
+        userId: req.userId,
+        postId: req.body.postId,
         name: req.body.name,
         content: req.body.content
       })
@@ -27,7 +28,12 @@ exports.getAllComments = (req, res, next) => {
 };
 
 exports.getOneComment = (req, res, next) => {
-    models.Comment.findOne({ where: {id:req.params.id}})
+    models.Comment.findOne({ 
+      where: {id:req.params.id},
+      include: {
+        model: models.Post,
+        attributes: ['name']},
+      })
       .then(function(comment) {
       if (comment) {
         res.status(200).json(comment);
@@ -36,9 +42,9 @@ exports.getOneComment = (req, res, next) => {
       }
     }).catch(function(err) {
         console.log(err);
-        res.status(500).json({"erro": "champs non valides"});
+        res.status(500).json({"error": "champs non valides"});
     });
-};
+}; 
 
 exports.deleteOneComment = (req, res, next) => {
     console.log('req.userId', req.userId);

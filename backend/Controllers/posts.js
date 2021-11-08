@@ -7,8 +7,8 @@ const posts = require('../models/posts');
 
 exports.createPost = (req, res, next) => {
       delete req.body.id;
-      console.log('models',models);
       models.Post.create ({
+        userId: req.userId,
         name: req.body.name,
         title: req.body.title,
         content: req.body.content,
@@ -53,7 +53,7 @@ exports.getOnePost = (req, res, next) => {
   });
 };
 
-exports.getAllPostsForOne = (req, res, next) => {
+/*exports.getAllPostsForOne = (req, res, next) => {
   let list = ""
   models.Post.findAll({ 
       where: { id: req.params.id },
@@ -63,7 +63,7 @@ exports.getAllPostsForOne = (req, res, next) => {
       res.status(200).json( { list } )
   })
   .catch((error) => { res.status(404).json({ "error" : "pas de posts trouvés pour la personne" })})
-};
+};*/
 
 exports.deleteOnePost = (req, res, next) => {
   console.log('req.userId', req.userId);
