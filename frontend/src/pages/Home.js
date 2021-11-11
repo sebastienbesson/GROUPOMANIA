@@ -1,5 +1,6 @@
-import '../styles/Home.css'
-import logo from '../logo&title.svg'
+import '../styles/Home.css';
+import logo from '../logo&title.svg';
+import React from 'react';
 
 function Home() {
     return  (

@@ -12,6 +12,7 @@ function App() {
     <Router>
       <nav>
       <Header />
+      <Link to ="/">Accueil</Link>
       <Link to="/Connect">Connexion</Link>
       <Link to="/Subscribe">Inscription</Link> 
       </nav>
