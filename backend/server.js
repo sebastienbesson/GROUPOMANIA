@@ -1,5 +1,16 @@
 const http = require('http');
 const app = require('./app');
+const cors = require('cors');
+
+app.use(cors());
+
+app.use('/Connect', (req, res) => {
+  res.send({
+    token: 'test123'
+  });
+});
+
+app.listen(8080, () => console.log('API is running on http://localhost:8080/Connect'));
 
 const normalizePort = val => {
   const port = parseInt(val, 10);
@@ -12,7 +23,7 @@ const normalizePort = val => {
   }
   return false;
 };
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3080');
 app.set('port', port);
 
 const errorHandler = error => {
