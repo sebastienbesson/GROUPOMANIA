@@ -4,7 +4,7 @@ const cors = require('cors');
 
 app.use(cors());
 
-app.use('/Connect', (req, res) => {
+app.use('/Connect', (req, res, next) => {
   res.send({
     token: 'test123'
   });

@@ -26,7 +26,7 @@ export default function Connect( { setToken }) {
           password
         });
         setToken(token);
-      }
+    }
   return(
     <div className="connect-wrapper">
       <h1>Please Log In</h1>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
@@ -6,11 +6,13 @@ import Connect from "./pages/Connect";
 import Subscribe from "./pages/Subscribe";
 import Dashboard from './components/Dashboard/Dashboard';
 import Preferences from './components/Preferences/Preferences';
-import "./App.css"
+import useToken from './components/App/useToken';
+import "./App.css";
 
 
 function App() {
-  const [token, setToken] = useState();
+  const { token, setToken } = useToken();
+ 
   if(!token) {
     return <Connect setToken={setToken} />
   }
