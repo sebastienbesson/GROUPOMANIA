@@ -15,6 +15,9 @@ function App() {
   if(!token) {
     return <Connect setToken={setToken} />
   }
+  if(!token) {
+    return <Subscribe setToken={setToken} />
+  }
   return (
 
     <Router>
@@ -28,7 +31,7 @@ function App() {
         <Route path="Connect" element={<Connect setToken={setToken}/>} />
         <Route path="Dashboard" element={<Dashboard />} />
         <Route path="Preferences" element={<Preferences />} />    
-        <Route path="Subscribe" element={<Subscribe/>} />
+        <Route path="Subscribe" element={<Subscribe setToken={setToken}/>} />
       </Routes>
     </Router>
   )
