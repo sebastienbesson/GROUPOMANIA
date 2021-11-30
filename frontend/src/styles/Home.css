@@ -3,6 +3,19 @@
 }
 .gpm-logo-home{
     height: 400px;
-    width: 50%;
-    
+    width: 50%; 
+}
+.home-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5%;
+}
+
+.home-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5%;
+    border: 2px #FD2D01 solid;
 }

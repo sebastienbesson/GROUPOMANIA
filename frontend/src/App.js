@@ -12,12 +12,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [token, setToken] = useState();
+ 
   if(!token) {
     return <Connect setToken={setToken} />
   }
   if(!token) {
     return <Subscribe setToken={setToken} />
   }
+ 
+ 
   return (
 
     <Router>
@@ -27,11 +30,12 @@ function App() {
         <Link to="/Subscribe">Inscription</Link>
       </Header>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home  />} />
         <Route path="Connect" element={<Connect setToken={setToken}/>} />
         <Route path="Dashboard" element={<Dashboard />} />
         <Route path="Preferences" element={<Preferences />} />    
         <Route path="Subscribe" element={<Subscribe setToken={setToken}/>} />
+        
       </Routes>
     </Router>
   )

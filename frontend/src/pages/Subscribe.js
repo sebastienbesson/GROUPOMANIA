@@ -15,7 +15,6 @@ async function signUpUser(credentials) {
  }
 
 export default function Subscribe({ setToken }) {
-  console.log(setToken);
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();

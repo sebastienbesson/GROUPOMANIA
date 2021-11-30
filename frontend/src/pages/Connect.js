@@ -12,10 +12,9 @@ async function loginUser(credentials) {
     body: JSON.stringify(credentials)
   })
     .then(data => data.json())
- }
+}
 
 export default function Connect({ setToken }) {
-  console.log(setToken);
   const [username, setUserName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
