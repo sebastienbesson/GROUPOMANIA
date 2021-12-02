@@ -11,7 +11,10 @@ async function loginUser(credentials) {
     },
     body: JSON.stringify(credentials)
   })
-    .then(data => data.json())
+  .then(response => {return response.json()})
+  .then(data => {
+    console.log(data)
+    localStorage.setItem('token', data.token)})
 }
 
 export default function Connect({ setToken }) {

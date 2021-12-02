@@ -1,55 +1,25 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
 //import axios from 'axios';
+import '../styles/Home.css'; 
 
-import '../styles/Home.css';
 
-/*const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI2LCJpYXQiOjE2Mzc5MjAxMzYsImV4cCI6MTYzODAwNjUzNn0.fFM4w0gygjZj3ouOD2ZRBQuJMse0LDeSbjz0FfZq5qg';
-const url = 'http://localhost:3001/api';
-
-axios.interceptors.request.use(
-  config => {
-    config.headers.authorization = `Bearer ${accessToken}`;
-    return config;
-  },
-  error => {
-    return Promise.reject(error);
-  }
-)
-
-export default  function Home ({setPosts}) {
-  const [posts, setPosts] = useState([]);
-  const [requestError, setRequestError] = useState([]);
-
-  const fetchData = useCallback(async () => {
-    try {
-      const result = await axios.get(`${url}/posts`);
-      setPosts(result.data);
-    } catch(err) {
-      setRequestError(err.message);
-    }
-  });
-
-  return (
-    <div className="homePosts">
-      <button onClick={() => fetchData()}>Afficher</button>
-      {posts.map(post => {
-        return <p key={post.id}>{post.name}</p>
-      })}
-    </div>
-  )
-}*/
 
 async function getAllPosts() {
-  
   return fetch('http://localhost:3001/api/posts', {
     method: 'GET',
     headers: {
-      'Content-type':'Application/json'
+      'Content-type':'Application/json',
+      'Authorization':`Bearer ${localStorage.getItem('token')}`
       },
   })
-    .then(data => data.json())
+  .then(response => {return response.json()})
+  .then(data => {
+    console.log(data)
+   })
 }
+
 
 export default function Home({ setToken }) {
 

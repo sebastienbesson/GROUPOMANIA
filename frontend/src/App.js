@@ -30,12 +30,12 @@ function App() {
         <Link to="/Subscribe">Inscription</Link>
       </Header>
       <Routes>
-        <Route path="/" element={<Home  />} />
+        <Route path="/" element={<Home/>} />
         <Route path="Connect" element={<Connect setToken={setToken}/>} />
         <Route path="Dashboard" element={<Dashboard />} />
         <Route path="Preferences" element={<Preferences />} />    
         <Route path="Subscribe" element={<Subscribe setToken={setToken}/>} />
-        
+        <Route path="/posts" element={<Home/>} />
       </Routes>
     </Router>
   )
