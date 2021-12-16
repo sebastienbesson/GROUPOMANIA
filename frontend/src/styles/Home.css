@@ -18,4 +18,10 @@
     align-items: center;
     padding: 5%;
     border: 2px #FD2D01 solid;
+    margin: 3%; 
+    
+}
+
+.home-button{
+    color: #FD2D01;
 }

@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import '../styles/Home.css';
 
-//import axios from 'axios';
-import '../styles/Home.css'; 
+class Home extends Component {
+  state = {
+    posts: []
+  }
 
-
-
-async function getAllPosts() {
-  return fetch('http://localhost:3001/api/posts', {
+  componentDidMount(){
+    fetch('http://localhost:3001/api/posts', {
     method: 'GET',
     headers: {
       'Content-type':'Application/json',
@@ -15,50 +15,29 @@ async function getAllPosts() {
       },
   })
   .then(response => {return response.json()})
-  .then(data => {
-    console.log(data)
-   })
+  .then(result => {
+    this.setState({posts: result})
+    console.log(result)
+})
+  }
+  render(){
+    return (     
+      <div className='home-wrapper'>
+        <p>nombre de posts:{this.state.posts.length}</p>
+        <p>Je créé un post<button>ici</button></p>
+        <h1>Liste des Posts</h1>
+        {this.state.posts.map(post =>
+          <div className='home-form'>
+            <p>nom:{post.name}</p>
+            <p>titre:{post.title}</p>
+            <p>contenu:{post.content}</p>
+            <p>commentaires:<button>Cliquez ici</button></p>
+          </div> 
+         )}
+      </div> 
+    )
+  }
 }
 
-
-export default function Home({ setToken }) {
-
-  const [name, setName] = useState();
-  const [title, setTitle] = useState();
-  const [content, setContent] = useState();
-  const handleSubmit = async e => {
-      e.preventDefault();
-      const token = await getAllPosts({
-        name,
-        title,
-        content
-      });
-      setToken(token);
-    }
-return(
-  <div className="home-wrapper">
-    <h1>Liste des Posts</h1>
-    <form className="home-form" onSubmit={handleSubmit}>
-      <label>
-        <p>Nom:</p>
-        <input type="text" onChange={e => setName(e.target.value)} />
-      </label>
-      <label>
-        <p>Titre:</p>
-        <input type="text" onChange={e => setTitle(e.target.value)} />
-      </label>
-      <label>
-        <p>Contenu:</p>
-        <input type="password" onChange={e => setContent(e.target.value)} />
-      </label>
-      <div>
-        <button className="home-btn" type="submit" >Afficher</button>
-      </div>
-    </form>
-  </div> 
-)
-}
-Home.propTypes = {
-    setToken: PropTypes.func.isRequired
-}
+export default Home;
 
