@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+//import { Link } from 'react-router-dom';
 
 import '../styles/Connect.css';
 
@@ -15,6 +16,7 @@ async function loginUser(credentials) {
   .then(data => {
     console.log(data)
     localStorage.setItem('token', data.token)})
+    
 }
 
 export default function Connect({ setToken }) {

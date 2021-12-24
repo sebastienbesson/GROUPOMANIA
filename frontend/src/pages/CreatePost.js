@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 
 import '../styles/Home.css';
 
@@ -47,6 +49,11 @@ return(
       <div>
         <button className="subscribe-btn" type="submit" >Validez</button>
       </div>
+      <div>
+        <p>
+        <Link to="/Home">Retour à la liste</Link>
+        </p>
+        </div>
     </form>
   </div> 
 )
