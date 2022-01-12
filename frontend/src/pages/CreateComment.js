@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import { Link, useParams } from 'react-router-dom';
+//import { useParams } from "react-router-dom"; 
 import '../styles/Home.css';
+
+//let {id} = useParams(); 
 
 async function newComment(credentials) {
   return fetch('http://localhost:3001/api/comments', {
@@ -46,6 +49,9 @@ return(
       </label>
       <div>
         <button className="subscribe-btn" type="submit" >Validez</button>
+      </div>
+      <div>
+        <Link to="/GetPost/:id">Retour Post</Link>
       </div>
     </form>
   </div> 

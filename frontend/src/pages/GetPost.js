@@ -1,21 +1,21 @@
 import axios from "axios";
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 //import axios from "axios";
-//import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 //import { Link } from "react-router-dom";
-//import { useParams } from "react-router-dom";
-import '../styles/Home.css';
+import { useParams } from "react-router-dom";
 
-export default class GetPost extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            post: null,
-        }
-    }
-    componentDidMount(){
+import '../styles/GetPost.css';
+
+//let postId = localStorage.getItem('id');
+
+export default function GetPost () {
+    const [post, setPost] = useState({});
+    let {id} = useParams();
+    useEffect(() => {
         axios
-        .get(`http://localhost:3001/api/posts/${this.props.id}`, {
+        .get(`http://localhost:3001/api/posts/${id}}`, {
           method: 'GET',
           headers: {
             'Content-type':'Application/json',
@@ -24,26 +24,37 @@ export default class GetPost extends Component{
         })
         .then(response => {
             console.log(response.data);
-            this.setState({
-                post: { ...response.data, id: this.props.id }
-            })
+            setPost(
+                response.data 
+            )
+            //let postId = localStorage.setItem('id');
         })
-    }
-    render(){
+      },[]);
+
+   
+    
         return(
-            <div>
-                {this.state.post &&(
+            <div className="getpost-wrapper">
+                {console.log(post)}
+                {post &&(
                     <div>
-                        <div>id:{this.state.post.id}</div>
-                        <div>name:{this.state.post.name}</div>
-                        <div>title:{this.state.post.title}</div>
-                        <div>content:{this.state.post.content}</div>
+                        <div>id:{post.id}</div>
+                        <div>name:{post.name}</div>
+                        <div>title:{post.title}</div>
+                        <div>content:{post.content}</div>
+                        <div>likes:{post.likes}</div>
                     </div>
                 )}
+                <div>
+                <Link to="/Home">Retour</Link>
+                <Link to="/CreateComment">Creer un commentaire depuis getpost</Link>
+                <Link to="/CommentList">Voir les commentaires depuis getpost</Link>
+                </div>
             </div>
+            
         )
     }
-}
+
 
 
 /*let params = new URLSearchParams(document.location.search.substring(1)); 
@@ -146,8 +157,8 @@ class GetPost extends Component {
       </div> 
     )
   }
-}
+}*/
 
 
-export default GetPost;*/
+
 

@@ -3,14 +3,14 @@ import React, { Component } from "react";
 import Post from "../components/Post.js";
 //import { Link } from "react-router-dom";
 import '../styles/Home.css';
-import GetPost from "./GetPost.js";
+//import GetPost from "./GetPost.js";
 
 export default class Home extends Component{
   constructor(props){
     super(props);
     this.state = {
       posts:[],
-      selectedPostId: null,
+      //selectedPostId: null,
     };
   }
   componentDidMount(){
@@ -36,6 +36,7 @@ export default class Home extends Component{
   onPostClickHandler = (id) => {
     console.log(id);
     this.setState({selectedPostId: id,});
+    //localStorage.setItem('id', id);
   }
   render(){
     const posts = this.state.posts.map((post) => {
@@ -45,15 +46,13 @@ export default class Home extends Component{
       )}/>
     })
     return(
-      <div>
+      <div> 
         <h1>Liste des Posts</h1>
         <p>nombre de posts:{this.state.posts.length}</p>
-        <div>{posts}</div>
-        {this.state.selectedPostId && (
-        <div>
-          <h2>Détail du post N°{this.state.selectedPostId}</h2>
-        <GetPost id={this.state.selectedPostId}/></div>
-        )}
+        <div className="home-global">
+          <div>{posts}</div>
+            
+        </div>
       </div>
     )
   }

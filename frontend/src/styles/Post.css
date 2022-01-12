@@ -1,0 +1,7 @@
+.post-wrapper{
+    display: flex;
+}
+.post-wrapper-global{
+    text-align: center;
+    border: 1px #FD2D01 solid;
+}

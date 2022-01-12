@@ -5,26 +5,21 @@ import Home from "./pages/Home";
 import Connect from "./pages/Connect";
 import Subscribe from "./pages/Subscribe";
 import CreatePost from "./pages/CreatePost";
+import Comment from "./components/Comment";
 import CreateComment from "./pages/CreateComment";
+import CommentList from "./pages/CommentList";
 import GetPost from "./pages/GetPost";
 import Dashboard from './components/Dashboard/Dashboard';
 import Preferences from './components/Preferences/Preferences';
 import "./App.css"
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
-
-
 function App() {
   const [token, setToken] = useState();
   if(!localStorage.getItem('token')) {
     return <Connect setToken={setToken} />
   }
-  
-   
- 
-  return (
-
+   return (
     <Router>
       <Header>  
         <Link to="/Home">Home</Link>
@@ -32,15 +27,15 @@ function App() {
         <Link to="/Subscribe">Inscription</Link>
       </Header>
       <Routes>
-        
         <Route path="Connect" element={<Connect setToken={setToken}/>} />
         <Route path="Home" element={<Home setToken={setToken}/>} />
         <Route path="Dashboard" element={<Dashboard />} />
         <Route path="Preferences" element={<Preferences />} />    
         <Route path="Subscribe" element={<Subscribe setToken={setToken}/>} />
         <Route path="CreatePost" element={<CreatePost setToken={setToken}/>} />
-        <Route path="GetPost/:id" element={<GetPost setToken={setToken}/>} />
+        <Route path="GetPost/:id" element={<GetPost />} />
         <Route path="CreateComment" element={<CreateComment setToken={setToken}/>} />
+        <Route path="CommentList" element={<CommentList />} />
       </Routes>
     </Router>
   )

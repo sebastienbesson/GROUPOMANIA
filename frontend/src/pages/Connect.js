@@ -31,6 +31,7 @@ export default function Connect({ setToken }) {
         password
       });
       setToken(token);
+      //window.location = <Link to="/Home"></Link>
     }
 return(
   <div className="connect-wrapper">

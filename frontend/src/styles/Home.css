@@ -10,6 +10,10 @@
     flex-direction: column;
     align-items: center;
     padding: 5%;
+    border: 2px #FD2D01 solid;
+}
+.home-global{
+    margin-left: 10px;
 }
 
 .home-form{
