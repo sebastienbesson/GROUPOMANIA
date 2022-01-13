@@ -53,18 +53,6 @@ exports.getOnePost = (req, res, next) => {
   });
 };
 
-/*exports.getAllPostsForOne = (req, res, next) => {
-  let list = ""
-  models.Post.findAll({ 
-      where: { id: req.params.id },
-  })
-  .then((res) => { 
-      list = res;
-      res.status(200).json( { list } )
-  })
-  .catch((error) => { res.status(404).json({ "error" : "pas de posts trouvés pour la personne" })})
-};*/
-
 exports.deleteOnePost = (req, res, next) => {
   console.log('req.userId', req.userId);
 	models.Post.findOne({where :{id:req.body.id}})
@@ -77,4 +65,54 @@ exports.deleteOnePost = (req, res, next) => {
 		})
 		.catch(error => res.status(401).json({ message: 'Suppression non autorisée!' }));
 };
+
+exports.like = (req, res, next) => {
+  models.Post.findOne({ id: req.params.id })
+    .then(post => {
+      switch (req.body.like) {
+        case -1:
+          Post.updateOne({ _d: req.params.id }, {
+              $inc: { dislikes: 1 },
+              $push: { usersDisliked: req.body.userId },
+              id: req.params.id
+              })
+            .then(() => res.status(201).json({ message: 'avis négatif!'}))
+            .catch( error => res.status(400).json({ error }))
+        break;
+        case 0:
+          if (post.usersLiked.find(user => user === req.body.userId)) {
+              Post.updateOne({ id : req.params.id }, {
+                $inc: { likes: -1 },
+                $pull: { usersLiked: req.body.userId },
+                id: req.params.id
+              })
+            .then(() => res.status(201).json({message: ' avis positif retiré !'}))
+            .catch( error => res.status(400).json({ error }))
+          }
+          if (post.usersDisliked.find(user => user === req.body.userId)) {
+              Post.updateOne({ id : req.params.id }, {
+                $inc: { dislikes:-1 },
+                $pull: { usersDisliked: req.body.userId },
+                id: req.params.id
+              })
+            .then(() => res.status(201).json({message: ' avis négatif retiré !'}))
+            .catch( error => res.status(400).json({ error }));
+          }
+          break;
+        case 1:
+          Post.updateOne({ _id: req.params.id }, {
+              $inc: { likes: 1 },
+              $push: { usersLiked: req.body.userId },
+              id: req.params.id
+              })
+            .then(() => res.status(201).json({ message: 'avis positif!'}))
+            .catch( error => res.status(400).json({ error }));
+        break;
+      default:
+      return res.status(500).json({ error });
+      }
+    })
+    .catch(error => res.status(500).json({ error }))
+};
+
 

@@ -5,11 +5,11 @@ import logo from '../logo&title.svg'
 function Header() {
     return  (
     <nav className="navbar navbar-expand-sm navbar-light">    
-        <div className='gpm-header'>
-            <img src={logo} alt='Groupomania' className='gpm-logo-header' />
-            <a href="./Home">Home</a>
-            <a href="./Connect">Connectez-vous</a>
-            <a href="./Subscribe">Inscrivez-vous</a>
+        <div className='header-wrapper'>
+            <img src={logo} alt='Groupomania' className='header-logo' />
+            <div className='header-link'><a href="./Home">Home</a></div>
+            <div className='header-link'><a href="./Connect">Connectez-vous</a></div>
+            <div className='header-link'><a href="./Subscribe">Inscrivez-vous</a></div>
         </div>
     </nav>
     )

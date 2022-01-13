@@ -14,8 +14,10 @@ export function Post (props){
             <div>Contenu:{props.post.content}</div>
             <div>Likes:{props.post.likes}</div>
             <div className="post-wrapper">
-                <Link to={{pathname: `/GetPost/${props.post.id}`}} >Ouvrir</Link>
-                <p>afficher le nb de commentaires sur ce post</p>
+                <div className="post-wrapper-link">
+                    <Link to={{pathname: `/GetPost/${props.post.id}`}} >Ouvrir</Link>
+                </div>
+                <p>commentaire(s) sur ce post</p>
             </div>
         </div>
         //</a>

@@ -1,6 +1,11 @@
 .getpost-wrapper{
-    margin-left: 5px;
-    padding-left: 5px;
+    width: 80%;
+    margin: 10%;
     text-align: center;
     border: 1px #FD2D01 solid;
+};
+.getpost-footer{
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-around !important;
 };

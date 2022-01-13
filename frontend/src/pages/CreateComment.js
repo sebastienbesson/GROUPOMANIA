@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link, useParams } from 'react-router-dom';
-//import { useParams } from "react-router-dom"; 
-import '../styles/Home.css';
+import { Link } from 'react-router-dom';
 
-//let {id} = useParams(); 
+import '../styles/CreateComment.css';
 
 async function newComment(credentials) {
   return fetch('http://localhost:3001/api/comments', {
@@ -32,9 +30,9 @@ export default function CreateComment({ setToken }) {
       setToken(comment);
     }
 return(
-  <div className="home-wrapper">
-    <h1>Nouveau Comment</h1>
-    <form className="home-form" onSubmit={handleSubmit}>
+  <div className="create-comment-wrapper">
+    <h1>Nouveau Commentaire</h1>
+    <form className="create-comment-form" onSubmit={handleSubmit}>
       <label>
         <p>Nom:</p>
         <input type="text" onChange={e => setName(e.target.value)} />
@@ -48,7 +46,7 @@ return(
         <input type="text" onChange={e => setContent(e.target.value)} />
       </label>
       <div>
-        <button className="subscribe-btn" type="submit" >Validez</button>
+        <button className="create-comment-btn" type="submit" >Validez</button>
       </div>
       <div>
         <Link to="/GetPost/:id">Retour Post</Link>

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-
-import '../styles/Home.css';
+import '../styles/CreatePost.css';
 
 async function newPost(credentials) {
   return fetch('http://localhost:3001/api/posts', {
@@ -31,9 +30,9 @@ export default function CreatePost({ setToken }) {
       setToken(post);
     }
 return(
-  <div className="home-wrapper">
+  <div className="create-post-wrapper">
     <h1>Nouveau Post</h1>
-    <form className="home-form" onSubmit={handleSubmit}>
+    <form className="create-post-form" onSubmit={handleSubmit}>
       <label>
         <p>Nom:</p>
         <input type="text" onChange={e => setName(e.target.value)} />
@@ -47,7 +46,7 @@ return(
         <input type="text" onChange={e => setContent(e.target.value)} />
       </label>
       <div>
-        <button className="subscribe-btn" type="submit" >Validez</button>
+        <button className="create-post-btn" type="submit" >Validez</button>
       </div>
       <div>
         <p>

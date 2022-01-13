@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-//import { Link } from 'react-router-dom';
 
 import '../styles/Connect.css';
 
@@ -31,8 +30,7 @@ export default function Connect({ setToken }) {
         password
       });
       setToken(token);
-      //window.location = <Link to="/Home"></Link>
-    }
+  }
 return(
   <div className="connect-wrapper">
     <h1>Connectez-vous!</h1>
