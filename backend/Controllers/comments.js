@@ -14,7 +14,7 @@ exports.createComment = (req, res, next) => {
 };
 
 exports.getAllComments = (req, res, next) => {
-    models.Comment.findAll()
+    models.Comment.findAll({where:{postId:1}}) 
     .then(function(comments) {
       if (comments) {
         res.status(200).json(comments);

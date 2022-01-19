@@ -2,11 +2,9 @@ import { Link } from "react-router-dom";
 
 import '../styles/Post.css';
 
-//let postId = localStorage.getItem('id');
 
 export function Post (props){
     return(
-        //<a href='#' onClick={props.postclicked}>
         <div className="post-wrapper-global">
             <div>Id:{props.post.id}</div>
             <div>Name:{props.post.name}</div>
@@ -19,9 +17,7 @@ export function Post (props){
                 </div>
                 <p>commentaire(s) sur ce post</p>
             </div>
-        </div>
-        //</a>
-        
+        </div>       
     )
 }
 

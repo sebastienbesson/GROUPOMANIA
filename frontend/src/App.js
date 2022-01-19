@@ -8,6 +8,7 @@ import CreatePost from "./pages/CreatePost";
 import CreateComment from "./pages/CreateComment";
 import CommentList from "./pages/CommentList";
 import GetPost from "./pages/GetPost";
+import Like from "./components/Like";
 import "./App.css"
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="GetPost/:id" element={<GetPost />} />
         <Route path="CreateComment" element={<CreateComment setToken={setToken}/>} />
         <Route path="CommentList" element={<CommentList />} />
+        <Route path="Like" element={<Like />} />
       </Routes>
     </Router>
   )

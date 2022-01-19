@@ -71,7 +71,7 @@ exports.like = (req, res, next) => {
     .then(post => {
       switch (req.body.like) {
         case -1:
-          Post.updateOne({ _d: req.params.id }, {
+          Post.updateOne({ id: req.params.id }, {
               $inc: { dislikes: 1 },
               $push: { usersDisliked: req.body.userId },
               id: req.params.id
