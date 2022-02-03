@@ -10,6 +10,9 @@ import '../styles/GetPost.css';
 export default function GetPost () {
     const [post, setPost] = useState({});
     let {id} = useParams();
+    console.log(id);
+    localStorage.setItem('id', id);
+    
     useEffect(() => {
         axios
         .get(`http://localhost:3001/api/posts/${id}}`, {
@@ -25,9 +28,10 @@ export default function GetPost () {
                 response.data 
             )
         })
-
       },[]);
-      const[postIds, setPostIds] = useState([]);
+    
+    const[postIds, setPostIds] = useState([]);
+   
     useEffect(() => {
         axios
         .get(`http://localhost:3001/api/comments?postId=${id}`, {
@@ -42,6 +46,7 @@ export default function GetPost () {
             setPostIds (
                 response.data 
             )
+            
         })
       },[]);
         return(
@@ -57,28 +62,25 @@ export default function GetPost () {
                             <Like /> 
                         </div>
                     </div>
-
                 )}
-                <div>
-                <div className="getpost-footer"><Link to="/CommentList">Voir les commentaires</Link></div>
-                <div className="getpost-footer"><Link to="/CreateComment">Creer un commentaire</Link></div>
                 <div className="getpost-footer"><Link to="/Home">Retour</Link></div>
-                </div>
+                <div className="getpost-footer"><Link to="/CreateComment">Creer un commentaire</Link></div>
                 <div>
-            <h1>Liste des commentaires</h1>
-            
-            <div>{postIds.map((comment) => (
-                <div className="commentlist-wrapper" key={comment.id}>
-                    <div>Nom:{comment.name}</div>
-                    <div>Contenu:{comment.content}</div>
-                    <div>id:{comment.id}</div>
-                    <div>postId:{comment.postId}</div>
-                    <div><Link to="/Home">Retour</Link></div>
+                    <p>{postIds.length} commentaires pour ce Post</p>
+                    
+                    <h1>Liste des commentaires</h1>
+                        <div>{postIds.map((comment) => (
+                            <div className="getpost-wrapper" key={comment.id}>
+                                <div>Nom:{comment.name}</div>
+                                <div>Contenu:{comment.content}</div>
+                                <div>id:{comment.id}</div>
+                                <div>postId:{comment.postId}</div>
+                                <div><Link to="/Home">Retour</Link></div>
+                            </div>
+                        ))}</div>
                 </div>
-            ))}</div>   
-        </div>
-            </div>
-            
+                <div className="getpost-footer"><Link to="/Home">Retour</Link></div>
+            </div>  
         )
 }
 

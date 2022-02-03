@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom"; 
+
 
 import '../styles/Connect.css';
 
@@ -13,15 +15,18 @@ async function loginUser(credentials) {
   })
   .then(response => {return response.json()})
   .then(data => {
-    console.log(data)
-    localStorage.setItem('token', data.token)})
     
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('userId', data.userId);
+    
+  })
 }
 
 export default function Connect({ setToken }) {
   const [username, setUserName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+ 
   const handleSubmit = async e => {
       e.preventDefault();
       const token = await loginUser({
@@ -29,6 +34,7 @@ export default function Connect({ setToken }) {
         email,
         password
       });
+      localStorage.setItem('userName', username);
       setToken(token);
   }
 return(
@@ -46,10 +52,11 @@ return(
       <label>
         <p>Mot de passe:</p>
         <input type="password" onChange={e => setPassword(e.target.value)} />
-      </label>
+      </label> 
       <div>
         <button className="connect-btn" type="submit" >Connexion</button>
       </div>
+      <div><Link to="/ChangePassword">Changer le mot de passe</Link></div>
     </form>
   </div> 
 )

@@ -4,6 +4,7 @@ const comments = require('../models/comments');
 exports.createComment = (req, res, next) => {
       delete req.body.id;
       models.Comment.create ({
+        where:{ postId:req.query.postId},
         userId: req.userId,
         postId: req.body.postId,
         name: req.body.name,
@@ -14,7 +15,7 @@ exports.createComment = (req, res, next) => {
 };
 
 exports.getAllComments = (req, res, next) => {
-    models.Comment.findAll({where:{postId:1}}) 
+    models.Comment.findAll({where:{ postId:req.query.postId} })
     .then(function(comments) {
       if (comments) {
         res.status(200).json(comments);

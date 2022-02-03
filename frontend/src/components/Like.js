@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import { useState } from "react";
+//import { useParams } from "react-router-dom";
+//import axios from "axios";
 
 import likeLogo from '../like.svg';
 import dislikeLogo from '../dislike.svg';

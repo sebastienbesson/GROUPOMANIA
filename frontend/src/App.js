@@ -9,8 +9,10 @@ import CreateComment from "./pages/CreateComment";
 import CommentList from "./pages/CommentList";
 import GetPost from "./pages/GetPost";
 import Like from "./components/Like";
+import ChangePassword from "./components/ChangePassword";
 import "./App.css"
 import "bootstrap/dist/css/bootstrap.min.css";
+
 
 function App() {
   const [token, setToken] = useState();
@@ -33,6 +35,7 @@ function App() {
         <Route path="CreateComment" element={<CreateComment setToken={setToken}/>} />
         <Route path="CommentList" element={<CommentList />} />
         <Route path="Like" element={<Like />} />
+        <Route path="ChangePassword" element={<ChangePassword setToken={setToken}/>} />
       </Routes>
     </Router>
   )
