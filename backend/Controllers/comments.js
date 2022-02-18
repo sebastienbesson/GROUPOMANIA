@@ -7,10 +7,9 @@ exports.createComment = (req, res, next) => {
         where:{ postId:req.query.postId},
         userId: req.userId,
         postId: req.body.postId,
-        name: req.body.name,
         content: req.body.content
       })
-      .then(() => res.status(201).json({ message: 'Comment crée!' }))
+      .then(() => res.status (201).json({ message: 'Comment crée!' }))
       .catch(error => {console.log('error', error);res.status(400).json({ message: 'Comment non crée!' })});
 };
 

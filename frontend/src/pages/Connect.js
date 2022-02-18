@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+//import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom"; 
-
+//import Disconnect from './components/Disconnect';
+//import ChangePassword from './components/ChangePassword';
 
 import '../styles/Connect.css';
 
@@ -15,10 +16,8 @@ async function loginUser(credentials) {
   })
   .then(response => {return response.json()})
   .then(data => {
-    
     localStorage.setItem('token', data.token);
     localStorage.setItem('userId', data.userId);
-    
   })
 }
 
@@ -34,7 +33,6 @@ export default function Connect({ setToken }) {
         email,
         password
       });
-      localStorage.setItem('userName', username);
       setToken(token);
   }
 return(
@@ -56,7 +54,6 @@ return(
       <div>
         <button className="connect-btn" type="submit" >Connexion</button>
       </div>
-      <div><Link to="/ChangePassword">Changer le mot de passe</Link></div>
     </form>
   </div> 
 )

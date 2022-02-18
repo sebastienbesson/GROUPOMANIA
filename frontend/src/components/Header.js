@@ -1,7 +1,6 @@
 import '../styles/Header.css'
 import logo from '../logo&title.svg'
 
-
 function Header() {
     return  (
     <nav className="navbar navbar-expand-sm navbar-light">    

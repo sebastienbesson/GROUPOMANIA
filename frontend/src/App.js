@@ -6,10 +6,10 @@ import Connect from "./pages/Connect";
 import Subscribe from "./pages/Subscribe";
 import CreatePost from "./pages/CreatePost";
 import CreateComment from "./pages/CreateComment";
-import CommentList from "./pages/CommentList";
 import GetPost from "./pages/GetPost";
 import Like from "./components/Like";
 import ChangePassword from "./components/ChangePassword";
+import Disconnect from "./components/Disconnect";
 import "./App.css"
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -32,9 +32,9 @@ function App() {
         <Route path="Subscribe" element={<Subscribe setToken={setToken}/>} />
         <Route path="CreatePost" element={<CreatePost setToken={setToken}/>} />
         <Route path="GetPost/:id" element={<GetPost />} />
-        <Route path="CreateComment" element={<CreateComment setToken={setToken}/>} />
-        <Route path="CommentList" element={<CommentList />} />
+        <Route path="CreateComment/:postId" element={<CreateComment setToken={setToken}/>} />
         <Route path="Like" element={<Like />} />
+        <Route path="Disconnect" element={<Disconnect setToken={setToken}/>} />
         <Route path="ChangePassword" element={<ChangePassword setToken={setToken}/>} />
       </Routes>
     </Router>

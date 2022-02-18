@@ -50,8 +50,7 @@ export default class Home extends Component{
             <p><Link to="/CreatePost">Nouveau Post</Link></p>
         </div>
         <div className="home-global">
-          <div>{posts}</div>
-            
+          <div>{posts}</div>  
         </div>
       </div>
     )

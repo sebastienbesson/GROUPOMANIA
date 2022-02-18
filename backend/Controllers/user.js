@@ -55,12 +55,12 @@ exports.modify = (req, res, next) => {
 			if(req.body.password) { 
 				bcrypt.genSalt(10, function(err, salt) {
 					bcrypt.hash(req.body.password, salt, function(err, hash) {
-						user.userName = req.body.userName
+						user.username = req.body.username
 						user.password = hash
 						user.email = req.body.email
 						user.save()
 							.then(() => res.status(201).json({ message: 'information(s) modifiée(s)!' }))
-							.catch(error => res.status(500).json({ error: 'ERREUR A'}));
+							.catch(error => {console.log('error', error);res.status(400).json({ message: 'Erreur A' })});
 					})
 				})
 			}else{
