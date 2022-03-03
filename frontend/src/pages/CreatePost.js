@@ -20,14 +20,16 @@ export default function CreatePost({ setToken }) {
   const [name, setName] = useState();
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
+  const [contentURL, setContentURL] = useState();
   const handleSubmit = async e => {
     e.preventDefault();
     const post = await newPost({
       name,
       title,
-      content
+      content,
+      contentURL
     });
-    setToken(post);
+    //setToken(post);
   }
 return(
   <div className="create-post-wrapper">
@@ -41,6 +43,9 @@ return(
         </label>
         <label>
           <p>Contenu:</p><input type="text" onChange={e => setContent(e.target.value)} />
+        </label>
+        <label>
+          <p>Contenu URL:</p><input type="file" onChange={e => setContentURL(e.target.files)} />
         </label>
         <div>
           <button className="create-post-btn" type="submit" >Validez</button>

@@ -17,7 +17,7 @@ async function newComment(credentials) {
     .then(data => data.json())
 }
 
-export default function CreateComment({ setToken }) {
+export default function CreateComment() {
   let { postId } = useParams();
   const [content, setContent] = useState();
   const handleSubmit = async e => {
@@ -26,7 +26,6 @@ export default function CreateComment({ setToken }) {
         postId: postId,
         content
       });
-      setToken(comment);
   }
 return(
   <div className="create-comment-wrapper">

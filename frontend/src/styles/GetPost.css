@@ -9,3 +9,12 @@
     flex-direction: column !important;
     justify-content: space-around !important;
 };
+.getpost-delete-btn{
+    margin: 25px 0px !important;
+    width: 100% !important;
+    background-color: #FD2D01;
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+    border: none;
+}

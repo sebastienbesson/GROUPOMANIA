@@ -1,3 +1,4 @@
+const { query } = require('express');
 const models = require('../models');
 const comments = require('../models/comments');
 
@@ -14,7 +15,12 @@ exports.createComment = (req, res, next) => {
 };
 
 exports.getAllComments = (req, res, next) => {
-    models.Comment.findAll({where:{ postId:req.query.postId} })
+    models.Comment.findAll({
+      where:{ postId:req.query.postId},
+      include:{
+        model: models.User,
+        attributes: ['userName']},
+      })
     .then(function(comments) {
       if (comments) {
         res.status(200).json(comments);
@@ -31,8 +37,8 @@ exports.getOneComment = (req, res, next) => {
     models.Comment.findOne({ 
       where: {id:req.params.id},
       include: {
-        model: models.Post,
-        attributes: ['name']},
+        model: models.User,
+        attributes: ['userName']},
       })
       .then(function(comment) {
       if (comment) {
@@ -44,19 +50,37 @@ exports.getOneComment = (req, res, next) => {
         console.log(err);
         res.status(500).json({"error": "champs non valides"});
     });
-}; 
+};
+
+exports.modifyComment = (req, res, next) => {
+  console.log('req.userIdControllers', req.userId);
+  models.Comment.findOne({where: {id: req.params.id }})
+  .then(comment  => {
+    if(comment.userId==req.userId){
+      comment.content = req.body.content
+			comment.save()
+      .then(() => res.status(200).json({ message: 'Comment modifié !'}))
+      .catch(error => res.status(400).json({ message: 'Comment non modifié!' }));
+    }else{
+      res.status(403).json({ message: 'Suppression non autorisée!' });
+    } 
+  })
+  .catch(error => {console.log('error', error);res.status(500).json({ message: 'comment non modifié!' })}); 
+};
 
 exports.deleteOneComment = (req, res, next) => {
     console.log('req.userId', req.userId);
-        models.Comment.findOne({where :{id:req.body.id}})
+        models.Comment.findOne({where:{id:req.params.id}})
             .then(comment => {
-                if(comment !== null) {
-                    comment.destroy({where : {id:req.body.id}})
+                if(comment.userId==req.userId) {
+                    models.Comment.destroy({where : {id:req.params.id}})
                       .then(() => res.status(200).json({ message: 'Comment supprimé!' }))
-                      .catch(error => res.status(500).json({ message: 'Comment non supprimé' }));
-                }
+                      .catch(error => res.status(400).json({ message: 'Comment non supprimé' }));
+                }else{
+                  res.status(403).json({ message: 'Suppression non autorisée!' });
+                } 
             })
-            .catch(error => res.status(401).json({ message: 'Suppression non autorisée!' }));
+            .catch(error => {console.log('error', error);res.status(500).json({ message: 'comment non supprimé!' })});
 };
 
 

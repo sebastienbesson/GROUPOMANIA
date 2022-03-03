@@ -24,7 +24,7 @@ export default class Home extends Component{
       .then((response) => {
         const posts = [];
         for (let key in response.data) {
-          posts.push({ ...response.data[key], id: key });
+          posts.push({ ...response.data[key] });
         }
         this.setState({
           posts:posts,

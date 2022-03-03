@@ -3,9 +3,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Like from "../components/Like.js";
 
 import '../styles/GetPost.css';
+
 
 export default function GetPost () {
     const [post, setPost] = useState({});
@@ -48,6 +48,36 @@ export default function GetPost () {
             )
         })
     },[]);
+    function deletePost(id)
+        { fetch(`http://localhost:3001/api/posts/${id}}`,{
+            method: 'DELETE',
+            headers: {
+                'Content-type':'Application/json',
+                'Authorization':`Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then((result) => {
+                result.json()
+            .then((resp) => {
+                console.log(resp)
+            })
+            })
+    }
+    function deleteComment(id)
+        { fetch(`http://localhost:3001/api/comments/${id}`,{
+            method: 'DELETE',
+            headers: {
+                'Content-type':'Application/json',
+                'Authorization':`Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then((result) => {
+                result.json()
+            .then((resp) => {
+                console.log(resp)
+            })
+            })
+        }
     return(
         <div className="getpost-wrapper">
             {console.log(post)}
@@ -57,11 +87,11 @@ export default function GetPost () {
                     <div>name:{post.name}</div>
                     <div>title:{post.title}</div>
                     <div>contentgetpost:{post.content}</div>
-                    <div>
-                        <Like /> 
-                    </div>
+                    <div>contentURL:{post.contentURL}</div> 
                 </div>
             )}
+            <div className="getpost-delete-btn"><button onClick={()=>deletePost(post.id)}>Supprimer</button></div>
+            <div className="getpost-footer"><Link to="/ModifyPost">Modifier le Post</Link></div>
             <div className="getpost-footer"><Link to="/Home">Retour</Link></div>
             <div className="getpost-footer"><Link to={{pathname: `/CreateComment/${post.id}`}}>Créer un commentaire</Link></div>
             <div>
@@ -69,14 +99,16 @@ export default function GetPost () {
                 <h1>Liste des commentaires</h1>
                     <div>{postIds.map((comment) => (
                         <div className="getpost-wrapper" key={comment.id}>
-                            <div>Nom:{comment.name}</div>
-                            <div>Contenu:{comment.content}</div>
+                            <div>Nom:{comment.User.userName}</div>
+                            <div>Contenu GetPost:{comment.content}</div>
+                            <div>Contenu URL:{comment.contentURL}</div>
                             <div>id:{comment.id}</div>
-                            <div>postId:{comment.postId}</div>
-                            <div><Link to="/Home">Retour</Link></div>
-                        </div>
+                            <div>postId:{comment.postId}</div>  
+                            <div className="getpost-footer"><Link to={{pathname: `/ModifyComment/${comment.id}`}}>Modifier</Link></div>
+                            <div ><button className="getpost-delete-btn" onClick={()=>deleteComment(comment.id)}>Supprimer</button></div>               
+                        </div>   
                     ))}
-                    </div>
+                    </div> 
             </div>
             <div className="getpost-footer"><Link to="/Home">Retour</Link></div>
         </div>  

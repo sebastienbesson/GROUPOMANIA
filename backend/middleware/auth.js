@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
     if (req.body.userId && req.body.userId !== userId) {
       throw 'Identifiant non valide';
     } else {
-      console.log('req.userId',userId);
+      console.log('req.userIdauth',userId);
       req.userId=userId
       next();
     }

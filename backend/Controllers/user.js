@@ -47,7 +47,27 @@ exports.login = (req, res, next) => {
     .catch(error => res.status(500).json({ message : 'erreur B' }));
 };  
 
-exports.modify = (req, res, next) => {
+exports.getUser = (req, res, next) => {
+  models.User.findOne({ 
+      where: {id:req.params.id},
+      /*include: {
+        model: models.User,
+        attributes: ["userName"]
+      },*/
+    })
+    .then(function(user) {
+    if (user) {
+      res.status(200).json(user);
+    }else {
+      res.status(404).json({"error": "pas de user trouvé"});
+    }
+  }).catch(function(err) {
+      console.log(err);
+      res.status(500).json({"error": "champs non valides"});
+  });
+};
+
+exports.modifyPassword = (req, res, next) => {
   console.log('req.userId', req.userId);
   userId=req.userId 
 	models.User.findOne({ where: {email : req.body.email }})
@@ -74,17 +94,18 @@ exports.modify = (req, res, next) => {
 		.catch(error => res.status(500).json({ error: 'ERREUR C' }));
 };
 
-exports.delete = (req, res, next) => {
-  console.log('req.userId', req.userId);
-	models.User.findOne({where :{id:req.userId}})
+exports.deleteUser = (req, res, next) => {
+  models.User.findOne({ where: {id : req.params.id }})
 		.then(user => {
-			if(user !== null) {
-				user.destroy()
+			if(user.id==req.userId) {
+				models.User.destroy({ where: {id : req.params.id }}) 
 					.then(() => res.status(200).json({ message: 'Utilisateur supprimé!' }))
-					.catch(error => res.status(500).json({ error }));
-			}
+					.catch(error => res.status(400).json({ message: 'Utilisateur non supprimé!' }));
+			}else{
+        res.status(403).json({ message: 'Suppression non autorisée!' });
+      }
 		})
-		.catch(error => res.status(401).json({ message: 'Suppression non autorisée!' }));
+		.catch(error => {console.log('error', error);res.status(500).json({ message: 'Utilisateur non supprimé!' })});
 };
 
 

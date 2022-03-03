@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-//import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-//import Disconnect from './components/Disconnect';
+//import Disconnect from '../components/Disconnect';
 //import ChangePassword from './components/ChangePassword';
 
 import '../styles/Connect.css';
@@ -54,7 +54,16 @@ return(
       <div>
         <button className="connect-btn" type="submit" >Connexion</button>
       </div>
+      <div>
+        <a href="./Header">Accueil</a>
+      </div>
+      <div>
+        <a href="./Subscribe">Créer votre compte</a>
+      </div>
+      
+      
     </form>
+    
   </div> 
 )
 }

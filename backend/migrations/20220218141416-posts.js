@@ -8,8 +8,8 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-     return Promise.all([
-      queryInterface.removeColumn('comments', 'name')
+    return Promise.all([
+      queryInterface.removeColumn('posts', 'name')
     ]);
   },
 
@@ -20,8 +20,8 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-     return Promise.all([
-       queryInterface.changeColumn('comments', 'name')
-      ]);
+    return Promise.all([
+      queryInterface.changeColumn('posts', 'name')
+    ]);
   }
 };
