@@ -1,0 +1,15 @@
+.account-wrapper{
+    width: 80%;
+    margin: 10%;
+    text-align: center;
+    border: 1px #FD2D01 solid;
+};
+.account-delete-btn{
+    margin: 25px 0px !important;
+    width: 100% !important;
+    background-color: #FD2D01;
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+    border: none;
+}

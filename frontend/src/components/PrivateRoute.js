@@ -1,34 +1,19 @@
 import React from 'react'
-import { Outlet, Navigate } from 'react-router-dom'
-//import { isAuth } from './IsAuth'
+import { Outlet } from 'react-router-dom'
+import Connect from '../pages/Connect';
 
-export default function PrivateRoute() {
-    let  userId = localStorage.getItem("token") == null ? false : true;
-    return (
-        <>
-            {userId ? <Outlet  /> : <Navigate to="/Header" />};
-        </>
-
-    )
+const useAuth = () => {
+    const user = localStorage.getItem('token');
+    if(user){
+        return true
+    } else {
+        return false
+    }
 }
 
-/*const PrivateRoute = () => {
-    const isAuth = true; // determine if authorized, from context or however you're doing it
+const PrivateRoute = () => {
+    const auth = useAuth();
+    return auth?<Outlet/>:<Connect/>
+}
 
-    // If authorized, return an outlet that will render child elements
-    // If not, return element that will navigate to login page
-    return isAuth() ? <Outlet /> : <Navigate to="/Connect" />;
-}*/
-
-/*const PrivateRoute = ({ component: Component, ...rest }) => {
-  return (
-    
-      {...rest}
-      render={(props) =>
-        isLogin() ? <Outlet /> : <Navigate to='../Connect' />
-        }
-    
-  )
-}*/
-
-//export default PrivateRoute
+export default PrivateRoute 

@@ -9,7 +9,7 @@ export function Post (props){
             <div>Name:{props.post.User.userName}</div>
             <div>Title:{props.post.title}</div>
             <div>Contenu depuis post.js:{props.post.content}</div>
-            <div>Contenu URL:<a href={props.post.contentURL}>{props.post.contentURL}</a></div>
+            <div>Contenu URL:<a href={props.post.contentUrl}>{props.post.contentUrl}</a></div>
             <div>Likes:{props.post.likes}</div>
             <div className="post-wrapper">
                 <div className="post-wrapper-link">

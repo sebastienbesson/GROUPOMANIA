@@ -5,23 +5,14 @@ const jwt = require('jsonwebtoken');
 const comments = require('../models/comments');
 
 exports.createPost = (req, res, next) => {
-      delete req.body.id;
-      const postObject = req.body;
-        if (!req.file){
-        post = {...postObject};
-        }else
-        post = {
-          ...postObject,
-        contentUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-  }
-      models.Post.create ({
+    models.Post.create ({
         userId: req.userId,
         name: req.body.name,
         title: req.body.title,
         content: req.body.content,
-        contentURL: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : null,
+        contentUrl: `${req.protocol}://${req.get('host')}/images/${req.filename}`,
         likes: req.body.likes
-      })
+    })
       .then(() => res.status(201).json({ message: 'Post crée!' }))
       .catch(error => {console.log('error', error);res.status(400).json({ message: 'Post non crée!' })});
 };
@@ -72,7 +63,7 @@ exports.modifyPost = (req, res, next) => {
     if(post.userId==req.userId){
       post.title = req.body.title
 			post.content = req.body.content
-			post.contentURL = req.body.contentURL
+			post.contentUrl = req.body.contentUrl
       post.save()
       .then(() => res.status(200).json({ message: 'Post modifié !'}))
       .catch(error => res.status(400).json({ message: 'Post non modifié!' }));

@@ -1,62 +1,79 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-//import { useParams } from "react-router-dom";
-import '../styles/GetPost.css';
+import React, { useState } from "react";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-async function upDatePost(credentials) {
-  //let {id} = useParams();
-  return fetch(`http://localhost:3001/api/posts/${localStorage.getItem('id')}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization':`Bearer ${localStorage.getItem('token')}`
-    },
-    body: JSON.stringify(credentials)
-  })
-    .then(data => data.json())
-    
-}
+function ModifyPost () {
+  const [ title, setTitle] = useState([]);
+  const [ content, setContent] = useState([]);
+  const [ contentUrl, setContentUrl] = useState([]);
+  let {id} = useParams();
+  console.log(id);
 
-export default function ModifyPost({ setToken }) {
-  const [title, setTitle] = useState();
-  const [content, setContent] = useState();
-  const [contentURL, setContentURL] = useState();
-  
-  const handleSubmit = async e => {
-      e.preventDefault();
-      const postUpDate = await upDatePost({
-        title,
-        content,
-        contentURL,
-      });
-      setToken(postUpDate);
+  useEffect (() => {
+    getOnePost();
+  },[])
+
+  function getOnePost() {
+    fetch(`http://localhost:3001/api/posts/${id}}`,{
+      method: 'GET',
+      headers: {
+        'Content-type':'Application/json',
+        'Authorization':`Bearer ${localStorage.getItem('token')}`
+      },
+      })
+      .then((result) => {
+        result.json()
+        .then((resp) => {
+          setTitle(resp.title)
+          setContent(resp.content)
+          setContentUrl(resp.contentUrl)
+        })
+      })
   }
-
-return(
-  <div className="getpost-wrapper">
-    <h1>Modifier le post</h1>
-      <form className="getpost-wrapper" onSubmit={handleSubmit}>
-        <label>
+  function upDatePost ()
+  {
+    let post = {title,content,contentUrl}
+    console.log("post", post)
+    fetch(`http://localhost:3001/api/posts/${id}}`,{
+      method: 'PUT',
+      headers: {
+        'Content-type':'Application/json',
+        'Authorization':`Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(post)
+    })
+    .then((result) => {result.json()
+      .then((resp) => {
+        console.log(resp)
+        getOnePost()
+      })})
+  }
+  return(
+    <div className="modifypost-wrapper">
+       <label>
           <p>Titre:</p><input type="text" onChange={e => setTitle(e.target.value)} />
         </label>
         <label>
-          <p>Content:</p><input type="text" onChange={e => setContent(e.target.value)} />
+          <p>contenu:</p><input type="text" onChange={e => setContent(e.target.value)} />
         </label>
         <label>
-          <p>ContentURL:</p><input type="file" onChange={e => setContentURL(e.target.value)} />
+          <p>contenu url:</p><input type="file" onChange={e => setContentUrl(e.target.files)} />
         </label>
-        <div>
-          <button className="change-password-btn" type="submit">Validez</button>
-        </div>
-        <div>
-          <Link to="/Connect">Retour Post</Link>
-        </div>
-      </form>
-  </div> 
-)
+      <input type="text" value={title} onChange={(e) => {setTitle(e.target.value)}}/>
+      <input type="text" value={content} onChange={(e) => {setContent(e.target.value)}}/>
+      <input type="file" value={contentUrl} onChange={(e) => {setContentUrl(e.target.files)}}/>
+      <button className="modifypost-btn" onClick={upDatePost}>Modifier</button>
+      <div className="modifypost-footer"><Link to="/Home">Retour</Link></div>
+    </div>
+  )
 }
-ModifyPost.propTypes = {
-    setToken: PropTypes.func.isRequired
-}
+
+export default ModifyPost
+
+
+
+
+
+
 

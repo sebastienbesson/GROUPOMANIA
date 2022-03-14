@@ -6,7 +6,7 @@
 
 .header-logo{
     text-align: left;
-    width: 20%;
+    width: 15%;
 }
 nav{
     border-bottom: 5px #FD2D01 solid !important;
@@ -14,7 +14,7 @@ nav{
 .header-link{
     font-size: large;
     font-weight: bold !important;
-    margin: 10% 5% 5% 5% !important;
+    margin: 5% 5% 5% 5% !important;
 }
 a{
     color: #FD2D01 !important;

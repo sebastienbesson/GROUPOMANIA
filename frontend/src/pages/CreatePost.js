@@ -17,27 +17,24 @@ async function newPost(credentials) {
 }
 
 export default function CreatePost({ setToken }) {
-  const [name, setName] = useState();
+  //const [name, setName] = useState();
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
-  const [contentURL, setContentURL] = useState();
+  const [contentUrl, setContentUrl] = useState();
   const handleSubmit = async e => {
     e.preventDefault();
     const post = await newPost({
-      name,
+      
       title,
       content,
-      contentURL
+      contentUrl
     });
-    //setToken(post);
   }
 return(
   <div className="create-post-wrapper">
     <h1>Nouveau Post</h1>
       <form className="create-post-form" onSubmit={handleSubmit}>
-        <label>
-          <p>Nom:</p><input type="text" onChange={e => setName(e.target.value)} />
-        </label>
+        
         <label>
           <p>Titre:</p><input type="text" onChange={e => setTitle(e.target.value)} />
         </label>
@@ -45,7 +42,7 @@ return(
           <p>Contenu:</p><input type="text" onChange={e => setContent(e.target.value)} />
         </label>
         <label>
-          <p>Contenu URL:</p><input type="file" onChange={e => setContentURL(e.target.files)} />
+          <p>Contenu URL:</p><input type="file" onChange={e => setContentUrl(e.target.files)} />
         </label>
         <div>
           <button className="create-post-btn" type="submit" >Validez</button>

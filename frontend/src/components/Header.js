@@ -10,6 +10,7 @@ function Header() {
             <div className='header-link'><a href="./Connect">Connectez-vous</a></div>
             <div className='header-link'><a href="./Disconnect">Déconnectez-vous</a></div>
             <div className='header-link'><a href="./Subscribe">Inscrivez-vous</a></div>
+            <div className='header-link'><a href="./Account">Mon Compte</a></div>
         </div>
     </nav>
     )

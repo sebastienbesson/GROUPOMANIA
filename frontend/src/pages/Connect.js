@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-//import Disconnect from '../components/Disconnect';
-//import ChangePassword from './components/ChangePassword';
-
+import { Link, useParams } from 'react-router-dom';
 import '../styles/Connect.css';
 
 async function loginUser(credentials) {
@@ -18,22 +15,25 @@ async function loginUser(credentials) {
   .then(data => {
     localStorage.setItem('token', data.token);
     localStorage.setItem('userId', data.userId);
+    window.location = "./Home";
   })
 }
+
+let id = localStorage.getItem('userId');
 
 export default function Connect({ setToken }) {
   const [username, setUserName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
- 
-  const handleSubmit = async e => {
+   
+    const handleSubmit = async e => {
       e.preventDefault();
       const token = await loginUser({
         username,
         email,
-        password
+        password,
+        id
       });
-      setToken(token);
   }
 return(
   <div className="connect-wrapper">
@@ -55,15 +55,12 @@ return(
         <button className="connect-btn" type="submit" >Connexion</button>
       </div>
       <div>
-        <a href="./Header">Accueil</a>
+        <a href="./Home">Accueil</a>
       </div>
       <div>
-        <a href="./Subscribe">Créer votre compte</a>
+      <Link to={{pathname: `/ChangePassword/${id}`}}>Changer mon mot de passe</Link> 
       </div>
-      
-      
     </form>
-    
   </div> 
 )
 }
