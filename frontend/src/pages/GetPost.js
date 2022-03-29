@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 import '../styles/GetPost.css';
 
-export default function GetPost () {
+export default function GetPost (data) {
     const [post, setPost] = useState({});
     let {id} = useParams();
     console.log(id);
@@ -20,6 +20,7 @@ export default function GetPost () {
             'Content-type':'Application/json',
             'Authorization':`Bearer ${localStorage.getItem('token')}`
             },
+        body: data,
         })
         .then(response => {
             console.log(response.data);
@@ -70,7 +71,7 @@ export default function GetPost () {
             headers: {
                 'Content-type':'Application/json',
                 'Authorization':`Bearer ${localStorage.getItem('token')}`
-            }
+            },
         })
             .then((result) => {
                 result.json()

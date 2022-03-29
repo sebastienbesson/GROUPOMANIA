@@ -4,17 +4,40 @@ const posts = require('../models/posts');
 const jwt = require('jsonwebtoken');
 const comments = require('../models/comments');
 
-exports.createPost = (req, res, next) => {
+/*exports.createPost = (req, res, next) => {
     models.Post.create ({
         userId: req.userId,
         name: req.body.name,
         title: req.body.title,
         content: req.body.content,
-        contentUrl: `${req.protocol}://${req.get('host')}/images/${req.filename}`,
+        contentUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
         likes: req.body.likes
     })
       .then(() => res.status(201).json({ message: 'Post crée!' }))
       .catch(error => {console.log('error', error);res.status(400).json({ message: 'Post non crée!' })});
+};*/
+
+exports.createPost = (req, res, next) => {
+  const newPost = req.file
+    ? {
+        name: req.body.name,
+        title: req.body.title,
+        content: req.body.content,
+        userId: req.userId,
+        contentUrl: `${req.protocol}://${req.get("host")}/images/${
+          req.file.filename
+        }`,
+      }
+    : {
+        name: req.body.name,
+        title: req.body.title,
+        content: req.body.content,
+        userId: req.userId,
+      };
+
+  models.Post.create(newPost)
+    .then(() => res.status(201).json({ message: "Post créé" }))
+    .catch((error) => res.status(400).json({ error }));
 };
 
 exports.getAllPosts = (req, res, next) => {

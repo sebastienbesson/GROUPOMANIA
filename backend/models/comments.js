@@ -1,4 +1,5 @@
 'use strict';
+const { NULL } = require('mysql/lib/protocol/constants/types');
 const {
   Model
 } = require('sequelize');
@@ -19,10 +20,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    
     postId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
     },
     content: {
       type: DataTypes.STRING,
