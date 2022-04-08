@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 import '../styles/CreateComment.css';
 
 async function newComment(credentials) {
   
-  return fetch('http://localhost:3001/api/comments', {
+  return fetch(`${process.env.REACT_APP_URL}/comments`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -20,12 +20,14 @@ async function newComment(credentials) {
 export default function CreateComment() {
   let { postId } = useParams();
   const [content, setContent] = useState();
+  const navigate = useNavigate();
   const handleSubmit = async e => {
       e.preventDefault();
       const comment = await newComment({
         postId: postId,
         content
       });
+      navigate(`../GetPost/${postId}`)
   }
 return(
   <div className="create-comment-wrapper">

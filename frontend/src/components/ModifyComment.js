@@ -15,7 +15,7 @@ function ModifyComment () {
   },[])
 
   function getOneComment() {
-    fetch(`http://localhost:3001/api/comments?postId=${id}`,{
+    fetch(`${process.env.REACT_APP_URL}/comments?postId=${id}`,{
       method: 'GET',
       headers: {
         'Content-type':'Application/json',
@@ -34,7 +34,7 @@ function ModifyComment () {
   {
     let comment = {content,contentURL}
     console.log("comment", comment)
-    fetch(`http://localhost:3001/api/comments/${id}}`,{
+    fetch(`${process.env.REACT_APP_URL}/comments/${id}}`,{
       method: 'PUT',
       headers: {
         'Content-type':'Application/json',

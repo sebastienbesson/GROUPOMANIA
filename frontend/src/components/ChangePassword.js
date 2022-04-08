@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import '../styles/ChangePassword.css';
 
 function ChangePassword () {
@@ -10,6 +10,7 @@ function ChangePassword () {
   const [email, setEmail] = useState();
   const [oldPassword, setOldPassword] = useState();
   const [password, setPassword] = useState();
+  const navigate = useNavigate();
   
   useEffect (() => {
     
@@ -18,7 +19,7 @@ function ChangePassword () {
 
   function getUser() {
     
-    fetch(`http://localhost:3001/api/auth/user/${id}}`,{
+    fetch(`${process.env.REACT_APP_URL}/auth/user/${id}}`,{
       method: 'GET',
       headers: {
         'Content-type':'Application/json',
@@ -39,8 +40,9 @@ function ChangePassword () {
   
   {
     let user = {username,email,oldPassword,password}
+    
     console.log("user", user)
-    fetch(`http://localhost:3001/api/auth/user/${id}}`,{
+    fetch(`${process.env.REACT_APP_URL}/auth/user/${id}}`,{
       method: 'PUT',
       headers: {
         'Content-type':'Application/json',
@@ -52,10 +54,12 @@ function ChangePassword () {
       .then((resp) => {
         console.log(resp)
         getUser()
+        navigate("../Account")
       })})
   }
   return(
     <div className="change-password-wrapper">
+      <h1>Changer mon mot de passe</h1>
        <label>
           <p>Nom:</p><input type="text" onChange={e => setUsername(e.target.value)} />
         </label>
@@ -69,7 +73,7 @@ function ChangePassword () {
           <p>Nouveau mot de passe:</p><input type="text" onChange={e => setPassword(e.target.value)} />
         </label>
         <button className="change-password-btn" onClick={upDatePassword}>Modifier</button>
-        <div><Link to="/connect">Retour Connect</Link></div>
+        <div><Link to="/Home">Retour Accueil</Link></div>
     </div>
   )
 }

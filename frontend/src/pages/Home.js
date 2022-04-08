@@ -14,7 +14,7 @@ export default class Home extends Component{
   }
   componentDidMount(){
     axios
-      .get('http://localhost:3001/api/posts', {
+      .get(`${process.env.REACT_APP_URL}/posts`, {
         method: 'GET',
         headers: {
           'Content-type':'Application/json',

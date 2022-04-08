@@ -1,7 +1,10 @@
 import { Component } from "react";
+
 import '../styles/Disconnect.css';
 
+
 export default class Disconnect extends Component {
+    
     logout = () => {
     localStorage.clear();
     window.location = "./Connect";

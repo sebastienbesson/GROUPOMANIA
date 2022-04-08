@@ -1,11 +1,13 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Account.css'
 
 function Account() {
     const [username, setUsername] = useState('');
+    const [contentUrl, setContentUrl] = useState('');
+    const navigate = useNavigate();
     let id = localStorage.getItem('userId');
-    fetch(`http://localhost:3001/api/auth/user/${id}}`,{
+    fetch(`${process.env.REACT_APP_URL}/auth/user/${id}}`,{
       method: 'GET',
       headers: {
         'Content-type':'Application/json',
@@ -19,7 +21,8 @@ function Account() {
         })
       })
       function deleteUser(id)
-        { fetch(`http://localhost:3001/api/auth/user/${id}`,{
+      
+        { fetch(`${process.env.REACT_APP_URL}/auth/user/${id}`,{
             method: 'DELETE',
             headers: {
                 'Content-type':'Application/json',
@@ -30,6 +33,7 @@ function Account() {
                 result.json()
             .then((resp) => {
                 localStorage.clear();
+                navigate("../Connect");
             })
             })
         }
@@ -37,7 +41,7 @@ function Account() {
         <div className='account-wrapper'>
             <label>Nom:</label>
             <input type="text" value={username} onChange={(e) => {setUsername(e.target.value)}}/>
-            <label>Ma photo:</label>
+            <label>Ma photo:<img src={contentUrl}/></label>
             <div>
               <Link to={{pathname: `/ChangePassword/${id}`}}>Changer mon mot de passe</Link> 
             </div>

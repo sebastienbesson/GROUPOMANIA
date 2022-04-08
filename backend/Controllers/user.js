@@ -12,6 +12,7 @@ exports.signup = (req, res, next) => {
         models.User.create({
           userName: req.body.userName,
           email: req.body.email,
+          contentUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
           password: hash
         })
           .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
@@ -50,10 +51,6 @@ exports.login = (req, res, next) => {
 exports.getUser = (req, res, next) => {
   models.User.findOne({ 
       where: {id:req.params.id},
-      /*include: {
-        model: models.User,
-        attributes: ["userName"]
-      },*/
     })
     .then(function(user) {
     if (user) {

@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import '../styles/GetPost.css';
 
@@ -10,14 +10,13 @@ export default function GetPost (data) {
     const [post, setPost] = useState({});
     let {id} = useParams();
     console.log(id);
-    //localStorage.setItem('id', id);
+    localStorage.setItem('id', id);
     
     useEffect(() => {
         axios
-        .get(`http://localhost:3001/api/posts/${id}}`, {
+        .get(`${process.env.REACT_APP_URL}/posts/${id}}`, {
           method: 'GET',
           headers: {
-            'Content-type':'Application/json',
             'Authorization':`Bearer ${localStorage.getItem('token')}`
             },
         body: data,
@@ -34,7 +33,7 @@ export default function GetPost (data) {
    
     useEffect(() => {
         axios 
-        .get(`http://localhost:3001/api/comments?postId=${id}`, {
+        .get(`${process.env.REACT_APP_URL}/comments?postId=${id}`, {
             method: 'GET',
             headers: {
                 'Content-type':'Application/json',
@@ -49,8 +48,10 @@ export default function GetPost (data) {
         })
     },[]);
     
+    const navigate = useNavigate();
+
     function deletePost(id)
-        { fetch(`http://localhost:3001/api/posts/${id}}`,{
+        { fetch(`${process.env.REACT_APP_URL}/posts/${id}}`,{
             method: 'DELETE',
             headers: {
                 'Content-type':'Application/json',
@@ -61,12 +62,13 @@ export default function GetPost (data) {
                 result.json()
             .then((resp) => {
                 console.log(resp)
+                navigate("../Home")
             })
             })
     }
     
     function deleteComment(id)
-        { fetch(`http://localhost:3001/api/comments/${id}`,{
+        { fetch(`${process.env.REACT_APP_URL}/comments/${id}`,{
             method: 'DELETE',
             headers: {
                 'Content-type':'Application/json',
@@ -89,7 +91,7 @@ export default function GetPost (data) {
                     <div>name:{post.name}</div>
                     <div>title:{post.title}</div>
                     <div>contentgetpost:{post.content}</div>
-                    <div>contentURL:{post.contentUrl}</div> 
+                    <div>contentURL:<img src={post.contentUrl}/></div> 
                 </div>
             )}
             <div className="getpost-delete-btn"><button onClick={()=>deletePost(post.id)}>Supprimer</button></div>

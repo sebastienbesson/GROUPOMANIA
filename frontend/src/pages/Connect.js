@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Connect.css';
 
 async function loginUser(credentials) {
-  return fetch('http://localhost:3001/api/auth/login', {
+  return fetch(`${process.env.REACT_APP_URL}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -15,34 +15,30 @@ async function loginUser(credentials) {
   .then(data => {
     localStorage.setItem('token', data.token);
     localStorage.setItem('userId', data.userId);
-    window.location = "./Home";
   })
 }
 
 let id = localStorage.getItem('userId');
 
 export default function Connect({ setToken }) {
-  const [username, setUserName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-   
+  const navigate = useNavigate();
+
     const handleSubmit = async e => {
       e.preventDefault();
       const token = await loginUser({
-        username,
         email,
         password,
         id
       });
+      navigate("/Home");
   }
 return(
   <div className="connect-wrapper">
     <h1>Connectez-vous!</h1>
     <form className="connect-form" onSubmit={handleSubmit}>
-      <label>
-        <p>Nom:</p>
-        <input type="text" onChange={e => setUserName(e.target.value)} />
-      </label>
+      
       <label>
         <p>E-mail:</p>
         <input type="text" onChange={e => setEmail(e.target.value)} />
@@ -54,12 +50,8 @@ return(
       <div>
         <button className="connect-btn" type="submit" >Connexion</button>
       </div>
-      <div>
-        <a href="./Home">Accueil</a>
-      </div>
-      <div>
-      <Link to={{pathname: `/ChangePassword/${id}`}}>Changer mon mot de passe</Link> 
-      </div>
+      
+      
     </form>
   </div> 
 )

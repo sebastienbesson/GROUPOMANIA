@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import '../styles/Header.css'
 import logo from '../logo&title.svg'
 
@@ -6,11 +8,11 @@ function Header() {
     <nav className="navbar navbar-expand-sm navbar-light">    
         <div className='header-wrapper'>
             <img src={logo} alt='Groupomania' className='header-logo' />
-            <div className='header-link'><a href="./Home">Home</a></div>
-            <div className='header-link'><a href="./Connect">Connectez-vous</a></div>
-            <div className='header-link'><a href="./Disconnect">Déconnectez-vous</a></div>
-            <div className='header-link'><a href="./Subscribe">Inscrivez-vous</a></div>
-            <div className='header-link'><a href="./Account">Mon Compte</a></div>
+            <div className='header-link'><Link to="/Home">Accueil</Link></div>
+            <div className='header-link'><Link to="/Connect">Connectez-vous</Link></div>
+            <div className='header-link'><Link to="/Disconnect">Déconnectez-vous</Link></div>
+            <div className='header-link'><Link to="/Subscribe">Inscrivez-vous</Link></div>
+            <div className='header-link'><Link to="/Account">Mon Compte</Link></div>
         </div>
     </nav>
     )

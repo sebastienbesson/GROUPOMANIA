@@ -8,7 +8,6 @@ import Account from './pages/Account';
 import CreatePost from "./pages/CreatePost";
 import CreateComment from "./pages/CreateComment";
 import GetPost from "./pages/GetPost";
-//import Like from "./components/Like";
 import ChangePassword from "./components/ChangePassword";
 import Disconnect from "./components/Disconnect";
 import ModifyPost from "./components/ModifyPost";

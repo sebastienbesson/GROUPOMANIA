@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import '../styles/CreatePost.css';
-
+ 
 async function newPost(data) {
-  return fetch('http://localhost:3001/api/posts', {
+  return fetch(`${process.env.REACT_APP_URL}/posts`, {
     method: 'POST',
     headers: {
-      //'Content-Type': 'application/json',
       'Authorization':`Bearer ${localStorage.getItem('token')}`
     },
     body: data
@@ -18,11 +17,11 @@ async function newPost(data) {
 }
 
 export default function CreatePost() {
-  //const [name, setName] = useState();
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
-  const [contentUrl, setContentUrl] = useState();
+  const [contentUrl, setContentUrl] = useState([]);
   
+  const navigate = useNavigate();
   
   const handleSubmit = async e => {
     e.preventDefault();
@@ -30,7 +29,7 @@ export default function CreatePost() {
     formData.append('title', title);
     formData.append('content', content);
     formData.append('contentUrl', contentUrl);
-
+    navigate("../Home");
     await newPost(formData)
   }
 
@@ -45,10 +44,10 @@ return(
           <p>Contenu:</p><input type="text" onChange={e => setContent(e.target.value)} />
         </label>
         <label>
-          <p>Contenu URL:</p><input type="file" onChange={e => setContentUrl(e.target.files[0])} />
+          <p>Contenu URL:</p><input type="file" accept="image/*" onChange={e => setContentUrl(e.target.files[0])} />
         </label>
         <div>
-          <button className="create-post-btn" type="submit" >Validez</button>
+          <button className="create-post-btn" type="submit" >Valider</button>
         </div>
         <div>
           <Link to="/Home">Retour à la liste</Link>

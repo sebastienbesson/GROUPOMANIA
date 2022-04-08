@@ -1,43 +1,16 @@
 const fs = require('fs');
 const models = require('../models');
-const posts = require('../models/posts');
-const jwt = require('jsonwebtoken');
-const comments = require('../models/comments');
 
-/*exports.createPost = (req, res, next) => {
+exports.createPost = (req, res, next) => {
     models.Post.create ({
         userId: req.userId,
         name: req.body.name,
         title: req.body.title,
         content: req.body.content,
         contentUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-        likes: req.body.likes
     })
       .then(() => res.status(201).json({ message: 'Post crée!' }))
       .catch(error => {console.log('error', error);res.status(400).json({ message: 'Post non crée!' })});
-};*/
-
-exports.createPost = (req, res, next) => {
-  const newPost = req.file
-    ? {
-        name: req.body.name,
-        title: req.body.title,
-        content: req.body.content,
-        userId: req.userId,
-        contentUrl: `${req.protocol}://${req.get("host")}/images/${
-          req.file.filename
-        }`,
-      }
-    : {
-        name: req.body.name,
-        title: req.body.title,
-        content: req.body.content,
-        userId: req.userId,
-      };
-
-  models.Post.create(newPost)
-    .then(() => res.status(201).json({ message: "Post créé" }))
-    .catch((error) => res.status(400).json({ error }));
 };
 
 exports.getAllPosts = (req, res, next) => {
@@ -79,7 +52,7 @@ exports.getOnePost = (req, res, next) => {
   });
 };
 
-exports.modifyPost = (req, res, next) => {
+/*exports.modifyPost = (req, res, next) => {
   console.log('req.userIdControllers', req.userId);
   models.Post.findOne({where: {id: req.params.id }})
   .then(post  => {
@@ -91,10 +64,44 @@ exports.modifyPost = (req, res, next) => {
       .then(() => res.status(200).json({ message: 'Post modifié !'}))
       .catch(error => res.status(400).json({ message: 'Post non modifié!' }));
     }else{
-      res.status(403).json({ message: 'Suppression non autorisée!' });
+      res.status(403).json({ message: 'Modification non autorisée!' });  
     } 
   })
   .catch(error => {console.log('error', error);res.status(500).json({ message: 'post non modifié!' })}); 
+};*/
+
+exports.modifyPost = (req, res, next) => {
+  const postUpdated = req.file
+    ? {
+      ...JSON.parse(req.body.post),
+        contentUrl: `${req.protocol}://${req.get("host")}/images/${
+          req.file.filename
+        }`,
+      }
+    : { ...req.body };
+      console.log(postUpdated);
+  const updatePost = () => {
+    models.Post.update(postUpdated, { where: { id: req.params.id } })
+      .then(() => res.status(201).json({ message: "Post modifié" }))
+      .catch((error) => res.status(400).json({ error }));
+  };
+
+  if (req.file) {
+    models.Post.findOne({ where: { id: req.params.id } })
+      .then((post) => {
+        if (post.contentUrl) {
+          const filename = post.contentUrl.split("/images")[1];
+          fs.unlink(`images/${filename}`, () => {
+            updatePost();
+          });
+        } else {
+          updatePost();
+        }
+      })
+      .catch((error) => res.status(404).json({ error }));
+  } else {
+    updatePost();
+  }
 };
 
 exports.deleteOnePost = (req, res, next) => {
@@ -112,53 +119,5 @@ exports.deleteOnePost = (req, res, next) => {
     .catch(error => {console.log('error', error);res.status(500).json({ message: 'post non supprimé!' })}); 
 };
 
-exports.like = (req, res, next) => {
-  models.Post.findOne({ id: req.params.id })
-    .then(post => {
-      switch (req.body.like) {
-        case -1:
-          Post.updateOne({ id: req.params.id }, {
-              $inc: { dislikes: 1 },
-              $push: { usersDisliked: req.body.userId },
-              id: req.params.id
-              })
-            .then(() => res.status(201).json({ message: 'avis négatif!'}))
-            .catch( error => res.status(400).json({ error }))
-        break;
-        case 0:
-          if (post.usersLiked.find(user => user === req.body.userId)) {
-              Post.updateOne({ id : req.params.id }, {
-                $inc: { likes: -1 },
-                $pull: { usersLiked: req.body.userId },
-                id: req.params.id
-              })
-            .then(() => res.status(201).json({message: ' avis positif retiré !'}))
-            .catch( error => res.status(400).json({ error }))
-          }
-          if (post.usersDisliked.find(user => user === req.body.userId)) {
-              Post.updateOne({ id : req.params.id }, {
-                $inc: { dislikes:-1 },
-                $pull: { usersDisliked: req.body.userId },
-                id: req.params.id
-              })
-            .then(() => res.status(201).json({message: ' avis négatif retiré !'}))
-            .catch( error => res.status(400).json({ error }));
-          }
-          break;
-        case 1:
-          Post.updateOne({ _id: req.params.id }, {
-              $inc: { likes: 1 },
-              $push: { usersLiked: req.body.userId },
-              id: req.params.id
-              })
-            .then(() => res.status(201).json({ message: 'avis positif!'}))
-            .catch( error => res.status(400).json({ error }));
-        break;
-      default:
-      return res.status(500).json({ error });
-      }
-    })
-    .catch(error => res.status(500).json({ error }))
-};
 
 
