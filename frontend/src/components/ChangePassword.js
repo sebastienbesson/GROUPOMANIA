@@ -29,7 +29,7 @@ function ChangePassword () {
       .then((result) => {
         result.json()
         .then((resp) => {
-          setUsername(resp.username)
+          setUsername(resp.userName)
           setEmail(resp.email)
           setOldPassword(resp.oldPassword)
           setPassword(resp.password)
@@ -60,11 +60,11 @@ function ChangePassword () {
   return(
     <div className="change-password-wrapper">
       <h1>Changer mon mot de passe</h1>
-       <label>
-          <p>Nom:</p><input type="text" onChange={e => setUsername(e.target.value)} />
+        <label>
+          <p>Nom:</p><input type="text" value={username} />
         </label>
         <label>
-          <p>Email:</p><input type="text" onChange={e => setEmail(e.target.value)} />
+          <p>Email:</p><input type="text" value={email} />
         </label>
         <label>
           <p>Ancien mot de passe:</p><input type="text" onChange={e => setOldPassword(e.target.value)} />
@@ -73,7 +73,7 @@ function ChangePassword () {
           <p>Nouveau mot de passe:</p><input type="text" onChange={e => setPassword(e.target.value)} />
         </label>
         <button className="change-password-btn" onClick={upDatePassword}>Modifier</button>
-        <div><Link to="/Home">Retour Accueil</Link></div>
+        <div><Link to="/Account">Retour Compte</Link></div>
     </div>
   )
 }

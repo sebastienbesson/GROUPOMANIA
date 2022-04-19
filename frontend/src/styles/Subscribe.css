@@ -38,3 +38,8 @@ input{
     font-size: larger;
     border: none;
 }
+
+.subscribe-img{
+    width: 150px;
+    height: 150px;
+}

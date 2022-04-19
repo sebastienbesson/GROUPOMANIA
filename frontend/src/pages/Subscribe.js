@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import '../styles/Subscribe.css';
+import '../styles/Subscribe.css'; 
 
 async function signUpUser(data) {
   return fetch(`${process.env.REACT_APP_URL}/auth/signup`, {
@@ -19,21 +19,44 @@ async function signUpUser(data) {
  export default function Subscribe(setToken) {
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
   const [contentUrl, setContentUrl] = useState([]);
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [confirmPasswordClass, setConfirmPasswordClass] = useState('form-control');
+  const [isConfirmPasswordDirty, setIsConfirmPasswordDirty] = useState(false);
+  
   
   const navigate = useNavigate();
-  
+   
   const handleSubmit = async e => {
     e.preventDefault();
     let formData = new FormData();
     formData.append('userName', userName);
     formData.append('email', email);
     formData.append('password', password);
+    formData.append('confirmPassword', confirmPassword);
     formData.append('contentUrl', contentUrl);
-    navigate("../Home");
+    navigate("/Connect");
     await signUpUser(formData)
   }
+
+  useEffect(() => {
+    if (isConfirmPasswordDirty) {
+        if (password === confirmPassword) {
+            setShowErrorMessage(false);
+            setConfirmPasswordClass('form-control is-valid')
+        } else {
+            setShowErrorMessage(true)
+            setConfirmPasswordClass('form-control is-invalid')
+        }
+    }
+  }, [confirmPassword])
+
+const handleConfirmPassword = (e) => {
+    setConfirmPassword(e.target.value);
+    setIsConfirmPasswordDirty(true);
+}
 
 return(
   <div className="subscribe-wrapper">
@@ -41,23 +64,28 @@ return(
     <form className="subscribe-form" onSubmit={handleSubmit}>
       <label>
         <p>Nom:</p>
-        <input type="text" onChange={e => setUserName(e.target.value)} />
+        <input type="text" value={userName} onChange={e => setUserName(e.target.value)} />
       </label>
       <label>
         <p>E-mail:</p>
-        <input type="text" onChange={e => setEmail(e.target.value)} />
-      </label>
-      <label>
-        <p>Mot de passe:</p>
-        <input type="password" onChange={e => setPassword(e.target.value)} />
+        <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
       </label>
       <label>
         <p>Photo:</p>
-        <input type="file" accept="image/*" onChange={e => setContentUrl(e.target.files[0])} />
+        <input className="subscribe-img" type="file" accept="image/*" onChange={e => setContentUrl(e.target.files[0])} />
       </label>
-      <div>
+    
+      <label>
+        <p>Mot de passe:</p>
+        <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+      </label>
+      <label>
+        <p>Confirmer le mot de passe:</p>
+        <input type="password" className={confirmPasswordClass} value={confirmPassword} onChange={handleConfirmPassword} />
+      </label>
+      {showErrorMessage && isConfirmPasswordDirty ? <div>le mot de passe ne correspond pas</div> : ''}
         <button className="subscribe-btn" type="submit" >Inscription</button>
-      </div>
+    
     </form>
   </div> 
 )
@@ -65,3 +93,4 @@ return(
 Subscribe.propTypes = {
     setToken: PropTypes.func.isRequired
 }
+

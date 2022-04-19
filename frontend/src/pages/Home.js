@@ -47,7 +47,7 @@ export default class Home extends Component{
         <div className="home-header">
           <h1>Liste des Posts</h1>
             <p>{this.state.posts.length} posts en ligne!</p>
-            <p><Link to="/CreatePost">Nouveau Post</Link></p>
+            <p><Link to="/CreatePost" className="home-link">Créer un nouveau Post</Link></p>
         </div>
         <div className="home-global">
           <div>{posts}</div>  

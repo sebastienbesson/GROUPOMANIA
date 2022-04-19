@@ -18,6 +18,7 @@ function Account() {
         result.json()
         .then((resp) => {
           setUsername(resp.userName)
+          setContentUrl(resp.contentUrl)
         })
       })
       function deleteUser(id)
@@ -39,9 +40,11 @@ function Account() {
         }
     return  (
         <div className='account-wrapper'>
-            <label>Nom:</label>
-            <input type="text" value={username} onChange={(e) => {setUsername(e.target.value)}}/>
-            <label>Ma photo:<img src={contentUrl}/></label>
+            <input className="account-wrapper-name" type="text" value={username}/>
+            <label><img src={contentUrl}/></label>
+            <div>
+              <Link to={{pathname: `/ModifyUserAccount/${id}`}}>Changer le nom ou la photo</Link> 
+            </div>
             <div>
               <Link to={{pathname: `/ChangePassword/${id}`}}>Changer mon mot de passe</Link> 
             </div>

@@ -9,6 +9,7 @@ import CreatePost from "./pages/CreatePost";
 import CreateComment from "./pages/CreateComment";
 import GetPost from "./pages/GetPost";
 import ChangePassword from "./components/ChangePassword";
+import ModifyUserAccount from "./components/ModifyUserAccount";
 import Disconnect from "./components/Disconnect";
 import ModifyPost from "./components/ModifyPost";
 import ModifyComment from "./components/ModifyComment";
@@ -32,7 +33,8 @@ function App() {
         <Route path='/Connect' element={<Connect />} />
         <Route path='/Subscribe' element={<Subscribe />} />
         <Route element={<PrivateRoute/>}>
-          <Route path='/Home' element={<Home />} />        
+          <Route path='/Home' element={<Home />} />  
+          <Route path='/ModifyUserAccount/:id' element={<ModifyUserAccount />} />   
           <Route path='/ChangePassword/:id' element={<ChangePassword />} />
           <Route path='/Disconnect' element={<Disconnect />} />
           <Route path='/Account' element={<Account />} />

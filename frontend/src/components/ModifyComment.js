@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
-import '../styles/ModifyPost.css';
+import '../styles/ModifyComment.css';
 
 function ModifyComment () {
   const [ content, setContent] = useState([]);
-  const [ contentURL, setContentURL] = useState([]);
   let {id} = useParams();
   console.log(id);
 
@@ -26,13 +24,12 @@ function ModifyComment () {
         result.json()
         .then((resp) => {
           setContent(resp.content)
-          setContentURL(resp.contentURL)
         })
       })
   }
   function upDateComment ()
   {
-    let comment = {content,contentURL}
+    let comment = {content}
     console.log("comment", comment)
     fetch(`${process.env.REACT_APP_URL}/comments/${id}}`,{
       method: 'PUT',
@@ -50,15 +47,11 @@ function ModifyComment () {
   }
   return(
     <div className="modifycomment-wrapper">
-        <label>
-          <p>contenu:</p><input type="text" onChange={e => setContent(e.target.value)} />
-        </label>
-        <label>
-          <p>contenu url:</p><input type="file" onChange={e => setContentURL(e.target.files)} />
-        </label>
-      <input type="text" value={content} onChange={(e) => {setContent(e.target.value)}}/>
-      <input type="file" value={contentURL} onChange={(e) => {setContentURL(e.target.files)}}/>
-      <button className="modifycomment-btn" onClick={upDateComment}>Modifier</button>
+      <label>
+          <p>Nouveau commentaire:</p>
+          <input type="text" className="modifycomment-text" onChange={e => setContent(e.target.value)} />
+      </label>
+      <div className="modifycomment-btn"><button onClick={upDateComment}>Modifier</button></div>
       <div className="modifycomment-footer"><Link to="/Home">Retour</Link></div>
     </div>
   )

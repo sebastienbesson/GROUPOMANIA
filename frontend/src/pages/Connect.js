@@ -31,9 +31,9 @@ export default function Connect({ setToken }) {
         email,
         password,
         id
-      });
+      })
       navigate("/Home");
-  }
+    }
 return(
   <div className="connect-wrapper">
     <h1>Connectez-vous!</h1>
@@ -48,7 +48,7 @@ return(
         <input type="password" onChange={e => setPassword(e.target.value)} />
       </label> 
       <div>
-        <button className="connect-btn" type="submit" >Connexion</button>
+        <button className="connect-btn" type="submit">Connexion</button>
       </div>
       
       

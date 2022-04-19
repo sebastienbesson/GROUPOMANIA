@@ -24,11 +24,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     contentUrl: {
       type: DataTypes.STRING,
-      allowNull: true
-    },
-    likes: {
-      type: DataTypes.INTEGER,
-      allowNull: true
     },
   }, {
     sequelize,

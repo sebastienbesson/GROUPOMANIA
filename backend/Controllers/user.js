@@ -48,7 +48,7 @@ exports.login = (req, res, next) => {
     .catch(error => res.status(500).json({ message : 'erreur B' }));
 };  
 
-exports.getUser = (req, res, next) => {
+exports.getUser = (req, res) => {
   models.User.findOne({ 
       where: {id:req.params.id},
     })
@@ -81,7 +81,7 @@ exports.modifyPassword = (req, res, next) => {
 					})
 				})
 			}else{
-				user.name = req.body.name
+				user.userName = req.body.userName
 				user.email = req.body.email
 				user.save()
 					.then(() => res.status(201).json({ message: 'Profil modifié!' }))
@@ -90,6 +90,35 @@ exports.modifyPassword = (req, res, next) => {
 		})
 		.catch(error => res.status(500).json({ error: 'ERREUR C' }));
 };
+
+exports.modifyUser = async (req, res) => {
+	try {
+		const userObject = req.file
+			? {
+					...req.body,
+					contentUrl: `${req.protocol}://${req.get('host')}/images/${
+						req.file.filename
+					}`,
+			  }
+			: { ...req.body };
+
+		if (userObject.contentUrl) {
+			const oldUser = await models.User.findOne({ where: { id: req.params.id } });
+			const oldFile = oldUser.contentUrl.split('/images/')[1];
+			fs.unlinkSync(`images/${oldFile}`);
+		}
+		const user = await models.User.update(userObject, {
+			where: { id: req.params.id },
+		});
+		if (!user) {
+			res.status(404).send();
+		}
+		res.status(200).json({ message: 'Utilisateur modifié' });
+	} catch (e) {
+		console.log(e);
+		res.status(500).send(e);
+	}
+}; 
 
 exports.deleteUser = (req, res, next) => {
   models.User.findOne({ where: {id : req.params.id }})
