@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
   const ModifyUserAccount = () => {
-    const [ username, setUsername] = useState();
+    const [ userName, setUserName] = useState();
     const [ contentUrl, setContentUrl ] = useState();
-    const navigate = useNavigate();
     let {id} = useParams();
 
     useEffect (() => {
@@ -24,7 +23,7 @@ import { Link } from "react-router-dom";
         .then((result) => {
           result.json()
           .then((resp) => {
-            setUsername (resp.username)
+            setUserName (resp.userName)
             setContentUrl(resp.contentUrl)
           })
         })
@@ -34,7 +33,7 @@ import { Link } from "react-router-dom";
       e.preventDefault();
   
       const data = new FormData();
-      data.append('username', username);
+      data.append('userName', userName);
       data.append('contentUrl', contentUrl);
       fetch(`${process.env.REACT_APP_URL}/auth/user/${id}}`, {
         method: 'PUT',
@@ -44,20 +43,20 @@ import { Link } from "react-router-dom";
         },
         body: data,
       }).then((res) => console.log(res));
-        //navigate(`./GetPost/${id}`);
+
       
     };
   
   return(
     <div className="modifypost-wrapper">
        <label>
-          <p>Changer le nom:</p><input type="text" onChange={e => setUsername(e.target.value)} />
+          <p>Changer le nom:</p><input type="text" onChange={e => setUserName(e.target.value)} />
         </label>
         <label>
           <p>Changer l'image:</p><input type="file" onChange={e => setContentUrl(e.target.files[0])} />
         </label>
       <p>Modification en cours</p>
-      <input type="text" value={username} onChange={(e) => {setUsername(e.target.value)}}/>
+      <input type="text" value={userName} onChange={(e) => {setUserName(e.target.value)}}/>
       <input type="file"  onChange={(e) => {setContentUrl(e.target.files[0])}}/>
       <button className="modifypost-btn" onClick={handleSubmit}>Valider</button>
       <div className="modifypost-footer"><Link to="/Account">Retour</Link></div>

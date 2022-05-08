@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; 
 
 const ModifyPost = () => {
     const [title, setTitle] = useState();
@@ -32,30 +32,29 @@ const ModifyPost = () => {
         })
       }
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-  
-      const data = new FormData();
-      data.append('title', title);
-      data.append('content', content);
-      data.append('contentUrl', contentUrl);
-      fetch(`${process.env.REACT_APP_URL}/posts/${id}}`, {
-        method: 'PUT',
-        headers: {
-          //'Content-type':'Application/json',
-          'Authorization':`Bearer ${localStorage.getItem('token')}`
-        },
-        body: data,
-      }).then((res) => console.log(res));
-        //navigate(`./GetPost/${id}`);
-      
-    };
-  
+      const handleSubmit = (e) => {
+        e.preventDefault();
+    
+        const data = new FormData();
+        data.append('title', title);
+        data.append('content', content);
+        data.append('contentUrl', contentUrl);
+        navigate(`../GetPost/${id}`); 
+        fetch(`${process.env.REACT_APP_URL}/posts/${id}}`, {
+          method: 'PUT',
+          headers: {
+            //'Content-type':'Application/json',
+            'Authorization':`Bearer ${localStorage.getItem('token')}`
+          },
+          body: data,
+        }).then((res) => console.log(res));
+      };
+
   return(
     <div className="modifypost-wrapper">
-       <label>
+        <label>
           <p>Changer le titre:</p><input type="text" onChange={e => setTitle(e.target.value)} />
-        </label>
+        </label>  
         <label>
           <p>Changer le contenu:</p><input type="text" onChange={e => setContent(e.target.value)} />
         </label>
@@ -71,5 +70,7 @@ const ModifyPost = () => {
     </div>
   )
   }
+  
 
 export default ModifyPost
+

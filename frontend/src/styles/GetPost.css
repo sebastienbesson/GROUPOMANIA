@@ -8,9 +8,14 @@
 .getpost-wrapper{
     display: flex;
     flex-direction: column;
+    padding: 2%;
 }
 
 .getpost-wrapper-text{
+    text-align: center !important;
+}
+
+.getpost-wrapper-text-picture{
     text-align: center !important;
 }
 
@@ -28,11 +33,17 @@
     color: black !important;
     font-size: larger !important;
 }
+.getpost-date{
+    color: black !important;
+    font-weight: lighter;
+    font-size: small;
+}
 
 .getpost-footer{
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-around !important;
+    text-align: center;
 }
 .getpost-delete{
     margin: 5% !important;
@@ -44,32 +55,42 @@
     font-weight: bold;
 }
 
+h1{
+    text-align: center;
+}
+
 .getpost-comment-wrapper{
     flex-direction: column;
     border: 1px #FD2D01 solid;
+    margin: 2%;
     padding: 2%;
 }
 
 .getpost-comment-wrapper-text{
-    flex-direction: row;
+    flex-direction: row; 
+    text-align: center;
 }
 
 .getpost-comment-wrapper-function{
     flex-direction: column;
+    text-align: center;
 }
 
 @media all and (min-width: 768px){
-    .getpost-wrapper{
+    .getpost-wrapper-picture{
         display: flex;
         flex-direction: row;
         margin: 5%;
         text-align: center;
         justify-content: space-between;
-
     }
-    .getpost-wrapper-text{
+    .post-wrapper-text-picture{
         flex-direction: column;
-        text-align: left !important;
+        text-align: left;
+    }
+    img{
+        width: 250px !important;
+        height: 250px !important;
     }
     .getpost-comment-wrapper-function{
         flex-direction: row;

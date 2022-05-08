@@ -53,34 +53,35 @@ exports.getOneComment = (req, res, next) => {
 };
 
 exports.modifyComment = (req, res, next) => {
-  console.log('req.userIdControllers', req.userId);
+  console.log('req.userIdControllers', req.body.userId);
   models.Comment.findOne({where: {id: req.params.id }})
   .then(comment  => {
-    if(comment.userId==req.userId){
+    if(req.userId==req.userId){
       comment.content = req.body.content
 			comment.save()
       .then(() => res.status(200).json({ message: 'Comment modifié !'}))
       .catch(error => res.status(400).json({ message: 'Comment non modifié!' }));
     }else{
-      res.status(403).json({ message: 'Suppression non autorisée!' });
+      res.status(403).json({ message: 'Modification non autorisée!' });
     } 
   })
   .catch(error => {console.log('error', error);res.status(500).json({ message: 'comment non modifié!' })}); 
 };
 
 exports.deleteOneComment = (req, res, next) => {
-    console.log('req.userId', req.userId);
-        models.Comment.findOne({where:{id:req.params.id}})
-            .then(comment => {
-                if(comment.userId==req.userId) {
-                    models.Comment.destroy({where : {id:req.params.id}})
-                      .then(() => res.status(200).json({ message: 'Comment supprimé!' }))
-                      .catch(error => res.status(400).json({ message: 'Comment non supprimé' }));
-                }else{
-                  res.status(403).json({ message: 'Suppression non autorisée!' });
-                } 
-            })
-            .catch(error => {console.log('error', error);res.status(500).json({ message: 'comment non supprimé!' })});
+    console.log('req.userIdControllers', req.body.userId);
+    models.Comment.findOne({where:{id:req.params.id}})
+    .then(comment => {
+      if(req.userId==req.userId){
+        comment.content = req.body.content
+        comment.destroy()
+        .then(() => res.status(200).json({ message: 'Comment supprimé!' }))
+        .catch(error => res.status(400).json({ message: 'Comment non supprimé' }));
+      }else{
+        res.status(403).json({ message: 'Suppression non autorisée!' });
+      } 
+    })
+    .catch(error => {console.log('error', error);res.status(500).json({ message: 'comment non supprimé!' })});
 };
 
 

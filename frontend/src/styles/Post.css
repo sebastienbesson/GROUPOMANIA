@@ -36,6 +36,11 @@
     color: black !important;
     font-size: larger !important;
 }
+.post-date{
+    color: black !important;
+    font-weight: lighter;
+    font-size: small;
+}
 .post-wrapper-link{
     margin: 5% !important;
     text-align: center;
@@ -47,7 +52,6 @@
     color: white !important;
 }
 @media all and (min-width: 768px){
-
     .post-wrapper-picture{
         display: flex;
         flex-direction: row;

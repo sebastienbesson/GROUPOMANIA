@@ -25,6 +25,14 @@ module.exports = (sequelize, DataTypes) => {
     contentUrl: {
       type: DataTypes.STRING,
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Post',

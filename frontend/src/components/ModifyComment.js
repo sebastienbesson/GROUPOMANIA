@@ -43,7 +43,8 @@ function ModifyComment () {
       .then((resp) => {
         console.log(resp)
         getOneComment()
-      })})
+      })
+    })
   }
   return(
     <div className="modifycomment-wrapper">

@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const fs = require('fs'); 
 
 require('dotenv').config();
 
@@ -13,6 +14,7 @@ exports.signup = (req, res, next) => {
           userName: req.body.userName,
           email: req.body.email,
           contentUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+          isAdmin: req.body.isAdmin,
           password: hash
         })
           .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
@@ -40,7 +42,8 @@ exports.login = (req, res, next) => {
                 { userId: User.id },
                 process.env.SECRET_CODE,
                 { expiresIn: '24h'}
-            )
+            ),
+            isAdmin: User.isAdmin
           })};
         })
         .catch(error => res.status(500).json({ message: 'erreur A' }));
@@ -93,32 +96,32 @@ exports.modifyPassword = (req, res, next) => {
 
 exports.modifyUser = async (req, res) => {
 	try {
-		const userObject = req.file
-			? {
+		const userObject = req.file ?
+		    {
 					...req.body,
 					contentUrl: `${req.protocol}://${req.get('host')}/images/${
 						req.file.filename
 					}`,
-			  }
-			: { ...req.body };
-
-		if (userObject.contentUrl) {
-			const oldUser = await models.User.findOne({ where: { id: req.params.id } });
-			const oldFile = oldUser.contentUrl.split('/images/')[1];
-			fs.unlinkSync(`images/${oldFile}`);
-		}
-		const user = await models.User.update(userObject, {
-			where: { id: req.params.id },
-		});
-		if (!user) {
+			  } : { ...req.body };
+        console.log(userObject);
+      if (userObject.contentUrl) {
+        const oldUser = await models.User.findOne({ where: { id: req.params.id } });
+        const oldFile = oldUser.contentUrl.split('/images/')[1];
+        //fs.unlinkSync(`images/${oldFile}`);
+      }
+      const user = await models.User.update(userObject, {
+        where: { id: req.params.id },
+      });
+      
+		  if (!user) {
 			res.status(404).send();
 		}
-		res.status(200).json({ message: 'Utilisateur modifié' });
-	} catch (e) {
+		res.status(200).json({ message: 'User modifié' });
+	  } catch (e) {
 		console.log(e);
 		res.status(500).send(e);
 	}
-}; 
+};
 
 exports.deleteUser = (req, res, next) => {
   models.User.findOne({ where: {id : req.params.id }})

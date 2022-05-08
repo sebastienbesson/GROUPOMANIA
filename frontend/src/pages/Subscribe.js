@@ -13,13 +13,13 @@ async function signUpUser(data) {
     body: data
   })
     .then(data => data.json())
-    
  }
 
  export default function Subscribe(setToken) {
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [contentUrl, setContentUrl] = useState([]);
+  //const [isAdmin, setIsAdmin] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [showErrorMessage, setShowErrorMessage] = useState(false);
@@ -34,6 +34,7 @@ async function signUpUser(data) {
     let formData = new FormData();
     formData.append('userName', userName);
     formData.append('email', email);
+    //formData.append('isAdmin', isAdmin);
     formData.append('password', password);
     formData.append('confirmPassword', confirmPassword);
     formData.append('contentUrl', contentUrl);
@@ -70,6 +71,7 @@ return(
         <p>E-mail:</p>
         <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
       </label>
+      
       <label>
         <p>Photo:</p>
         <input className="subscribe-img" type="file" accept="image/*" onChange={e => setContentUrl(e.target.files[0])} />

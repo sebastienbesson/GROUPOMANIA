@@ -65,24 +65,17 @@ exports.getOnePost = (req, res, next) => {
 
 exports.modifyPost = async (req, res) => {
 	try {
-		const postObject = req.file
-			? {
-					...req.body,
-					contentUrl: `${req.protocol}://${req.get('host')}/images/${
-						req.file.filename
-					}`,
-			  }
-			: { ...req.body };
+		const postObject = req.file ?
+		    {...req.body,
+					contentUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+			  } : { ...req.body };
 
-		if (postObject.contentUrl) {
-			const oldPost = await models.Post.findOne({ where: { id: req.params.id } });
-			const oldFile = oldPost.contentUrl.split('/images/')[1];
-			fs.unlinkSync(`images/${oldFile}`);
-		}
-		const post = await models.Post.update(postObject, {
-			where: { id: req.params.id },
-		});
-		if (!post) {
+      
+      const post = await models.Post.update(postObject, {
+        where: { id: req.params.id },
+      });
+      
+		  if (!post) {
 			res.status(404).send();
 		}
 		res.status(200).json({ message: 'Post modifié' });
@@ -90,17 +83,22 @@ exports.modifyPost = async (req, res) => {
 		console.log(e);
 		res.status(500).send(e);
 	}
-}; 
+};
 
 exports.deleteOnePost = (req, res, next) => {
   console.log('req.userIdControllers', req.userId);
+  console.log('req.isAdminControllers', req.isAdmin);
   models.Post.findOne({where: { id: req.params.id }})
     .then(post  => {
-      if(post.userId==req.userId){
+      if(post.userId==req.userId || req.isAdmin==true){
+        const filename = post.contentUrl.split('/images/')[1];
+        fs.unlink(`images/${filename}`, () => {
         models.Post.destroy({where : { id: req.params.id}})
         .then(() => res.status(200).json({ message: 'Post supprimé !'}))
-        .catch(error => res.status(400).json({ message: 'Post non supprimé!' }));
-      }else{
+        .catch(error => res.status(400).json({ message: 'Post non supprimé!' })); 
+      })
+    }
+    else{
         res.status(403).json({ message: 'Suppression non autorisée!' });
       } 
     })

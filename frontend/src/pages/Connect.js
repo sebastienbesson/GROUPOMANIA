@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Connect.css';
 
 async function loginUser(credentials) {
+  
   return fetch(`${process.env.REACT_APP_URL}/auth/login`, {
     method: 'POST',
     headers: {
@@ -15,22 +16,26 @@ async function loginUser(credentials) {
   .then(data => {
     localStorage.setItem('token', data.token);
     localStorage.setItem('userId', data.userId);
+    localStorage.setItem('isAdmin', data.isAdmin);
   })
 }
 
 let id = localStorage.getItem('userId');
+let isAdmin = localStorage.getItem('isAdmin');
+console.log(isAdmin);
 
 export default function Connect({ setToken }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
 
-    const handleSubmit = async e => {
+  const handleSubmit = async e => {
       e.preventDefault();
       const token = await loginUser({
         email,
         password,
-        id
+        id, 
+        isAdmin
       })
       navigate("/Home");
     }
@@ -49,6 +54,7 @@ return(
       </label> 
       <div>
         <button className="connect-btn" type="submit">Connexion</button>
+        <p className='errorMsg'></p>
       </div>
       
       
