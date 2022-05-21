@@ -6,8 +6,6 @@ import '../styles/ChangePassword.css';
 function ChangePassword () {
   let {id} = useParams();
   console.log(id);
-  const [username, setUsername] = useState();
-  const [email, setEmail] = useState();
   const [oldPassword, setOldPassword] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
@@ -29,19 +27,15 @@ function ChangePassword () {
       .then((result) => {
         result.json()
         .then((resp) => {
-          setUsername(resp.userName)
-          setEmail(resp.email)
           setOldPassword(resp.oldPassword)
           setPassword(resp.password)
         })
       })
   }
   function upDatePassword ()
-  
   {
-    let user = {username,email,oldPassword,password}
+    let user = {oldPassword,password}
     
-    console.log("user", user)
     fetch(`${process.env.REACT_APP_URL}/auth/user/${id}}`,{
       method: 'PUT',
       headers: {
@@ -60,12 +54,6 @@ function ChangePassword () {
   return(
     <div className="change-password-wrapper">
       <h1>Changer mon mot de passe</h1>
-        <label>
-          <p>Nom:</p><input type="text" value={username} />
-        </label>
-        <label>
-          <p>Email:</p><input type="text" value={email} />
-        </label>
         <label>
           <p>Ancien mot de passe:</p><input type="text" onChange={e => setOldPassword(e.target.value)} />
         </label>

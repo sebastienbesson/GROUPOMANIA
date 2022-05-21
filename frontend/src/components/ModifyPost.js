@@ -43,7 +43,6 @@ const ModifyPost = () => {
         fetch(`${process.env.REACT_APP_URL}/posts/${id}}`, {
           method: 'PUT',
           headers: {
-            //'Content-type':'Application/json',
             'Authorization':`Bearer ${localStorage.getItem('token')}`
           },
           body: data,

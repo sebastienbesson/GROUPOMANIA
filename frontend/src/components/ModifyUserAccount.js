@@ -38,13 +38,10 @@ import { Link } from "react-router-dom";
       fetch(`${process.env.REACT_APP_URL}/auth/user/${id}}`, {
         method: 'PUT',
         headers: {
-          //'Content-type':'Application/json',
           'Authorization':`Bearer ${localStorage.getItem('token')}`
         },
         body: data,
       }).then((res) => console.log(res));
-
-      
     };
   
   return(

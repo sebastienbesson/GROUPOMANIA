@@ -8,10 +8,12 @@ import Account from './pages/Account';
 import CreatePost from "./pages/CreatePost";
 import CreateComment from "./pages/CreateComment";
 import GetPost from "./pages/GetPost";
+import GetPostByUser from "./pages/GetPostByUser";
 import ChangePassword from "./components/ChangePassword";
 import ModifyUserAccount from "./components/ModifyUserAccount";
 import Disconnect from "./components/Disconnect";
 import ModifyPost from "./components/ModifyPost";
+import GetUser from "./components/GetUser";
 import ModifyComment from "./components/ModifyComment";
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -39,6 +41,8 @@ function App() {
           <Route path='/Disconnect' element={<Disconnect />} />
           <Route path='/Account' element={<Account />} />
           <Route path='/GetPost/:id' element={<GetPost />} />
+          <Route path='/GetUser/:id' element={<GetUser />} />
+          <Route path='/GetPostByUser/:id' element={<GetPostByUser />} />
           <Route path='/CreatePost' element={<CreatePost />} />
           <Route path='/CreateComment/:postId' element={<CreateComment />} />
           <Route path='/ModifyPost/:id' element={<ModifyPost />} />

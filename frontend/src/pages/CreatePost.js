@@ -59,4 +59,3 @@ return(
 CreatePost.propTypes = {
     setToken: PropTypes.func.isRequired
 }
-

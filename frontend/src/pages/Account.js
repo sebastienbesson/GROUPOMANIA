@@ -21,9 +21,9 @@ function Account() {
           setContentUrl(resp.contentUrl)
         })
       })
-      function deleteUser(id)
-      
-        { fetch(`${process.env.REACT_APP_URL}/auth/user/${id}`,{
+
+      function deleteUser(id){
+        fetch(`${process.env.REACT_APP_URL}/auth/user/${id}`,{
             method: 'DELETE',
             headers: {
                 'Content-type':'Application/json',
@@ -37,7 +37,7 @@ function Account() {
                 navigate("../Connect");
             })
             })
-        }
+      }
     return  (
         <div className='account-wrapper'>
             <input className="account-wrapper-name" type="text" value={username}/>

@@ -4,7 +4,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 
 import '../styles/CreateComment.css';
 
-async function newComment(credentials) {
+async function newComment(data) {
   
   return fetch(`${process.env.REACT_APP_URL}/comments`, {
     method: 'POST',
@@ -12,18 +12,20 @@ async function newComment(credentials) {
       'Content-Type': 'application/json',
       'Authorization':`Bearer ${localStorage.getItem('token')}`
     },
-    body: JSON.stringify(credentials),
+    body: JSON.stringify(data),
   })
     .then(data => data.json())
 }
 
 export default function CreateComment() {
   let { postId } = useParams();
+  let { userId } = useParams();
   const [content, setContent] = useState();
   const navigate = useNavigate();
   const handleSubmit = async e => {
       e.preventDefault();
       const comment = await newComment({
+        userId: userId,
         postId: postId,
         content
       });

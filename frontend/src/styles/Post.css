@@ -28,6 +28,12 @@
     font-size: large !important;
     font-weight: bold !important;
 }
+
+.post-name-text{
+    color: blackFD2D01 !important;
+    font-size: large !important;
+}
+
 .post-title{
     color: black !important;
     font-weight: bolder !important;

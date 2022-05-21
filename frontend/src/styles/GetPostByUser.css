@@ -1,0 +1,35 @@
+.getpostbyuser-wrapper-global{
+    flex-direction: row;
+    text-align: center;
+    border: 1px #FD2D01 solid;
+    margin: 2%;
+} 
+
+.getpostbyuser-wrapper{
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+}
+
+.getpostbyuser-wrapper-text{
+    text-align: center !important;
+}
+
+.getpostbyuser-title{
+    color: black !important;
+    font-weight: bolder !important;
+}
+
+.getpostbyuser-date{
+    color: black !important;
+    font-weight: lighter;
+    font-size: small;
+}
+
+.getpostbyuser-footer{
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-around !important;
+    text-align: center;
+}
+

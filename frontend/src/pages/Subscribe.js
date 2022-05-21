@@ -7,9 +7,6 @@ import '../styles/Subscribe.css';
 async function signUpUser(data) {
   return fetch(`${process.env.REACT_APP_URL}/auth/signup`, {
     method: 'POST',
-    headers: {
-      //'Content-Type': 'application/json'
-    },
     body: data
   })
     .then(data => data.json())
@@ -19,7 +16,6 @@ async function signUpUser(data) {
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [contentUrl, setContentUrl] = useState([]);
-  //const [isAdmin, setIsAdmin] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [showErrorMessage, setShowErrorMessage] = useState(false);
@@ -34,7 +30,6 @@ async function signUpUser(data) {
     let formData = new FormData();
     formData.append('userName', userName);
     formData.append('email', email);
-    //formData.append('isAdmin', isAdmin);
     formData.append('password', password);
     formData.append('confirmPassword', confirmPassword);
     formData.append('contentUrl', contentUrl);
@@ -69,14 +64,12 @@ return(
       </label>
       <label>
         <p>E-mail:</p>
-        <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
+        <input type="mail" value={email} onChange={e => setEmail(e.target.value)} />
       </label>
-      
       <label>
         <p>Photo:</p>
         <input className="subscribe-img" type="file" accept="image/*" onChange={e => setContentUrl(e.target.files[0])} />
       </label>
-    
       <label>
         <p>Mot de passe:</p>
         <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
@@ -86,8 +79,7 @@ return(
         <input type="password" className={confirmPasswordClass} value={confirmPassword} onChange={handleConfirmPassword} />
       </label>
       {showErrorMessage && isConfirmPasswordDirty ? <div>le mot de passe ne correspond pas</div> : ''}
-        <button className="subscribe-btn" type="submit" >Inscription</button>
-    
+        <button className="subscribe-btn" type="submit" >Inscription</button> 
     </form>
   </div> 
 )

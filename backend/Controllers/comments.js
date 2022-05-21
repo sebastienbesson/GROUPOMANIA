@@ -1,9 +1,6 @@
-const { query } = require('express');
 const models = require('../models');
-const comments = require('../models/comments');
 
 exports.createComment = (req, res, next) => {
-      delete req.body.id;
       models.Comment.create ({
         where:{ postId:req.query.postId},
         userId: req.userId,
@@ -19,7 +16,11 @@ exports.getAllComments = (req, res, next) => {
       where:{ postId:req.query.postId},
       include:{
         model: models.User,
-        attributes: ['userName']},
+        attributes: ['userName']
+      },
+      order:[
+        ["createdAt","desc"]
+      ]
       })
     .then(function(comments) {
       if (comments) {
@@ -53,14 +54,14 @@ exports.getOneComment = (req, res, next) => {
 };
 
 exports.modifyComment = (req, res, next) => {
-  console.log('req.userIdControllers', req.body.userId);
+  console.log('req.userIdControllers', req.userId);
+  console.log('req.isAdminControllers', req.isAdmin);
   models.Comment.findOne({where: {id: req.params.id }})
   .then(comment  => {
-    if(req.userId==req.userId){
+    if(comment.userId === req.userId || req.isAdmin === true){
       comment.content = req.body.content
 			comment.save()
       .then(() => res.status(200).json({ message: 'Comment modifié !'}))
-      .catch(error => res.status(400).json({ message: 'Comment non modifié!' }));
     }else{
       res.status(403).json({ message: 'Modification non autorisée!' });
     } 
@@ -69,14 +70,14 @@ exports.modifyComment = (req, res, next) => {
 };
 
 exports.deleteOneComment = (req, res, next) => {
-    console.log('req.userIdControllers', req.body.userId);
+    console.log('req.userIdControllers', req.userId);
+    console.log('req.isAdminControllers', req.isAdmin);
     models.Comment.findOne({where:{id:req.params.id}})
     .then(comment => {
-      if(req.userId==req.userId){
+      if(comment.userId === req.userId || req.isAdmin === true){
         comment.content = req.body.content
         comment.destroy()
         .then(() => res.status(200).json({ message: 'Comment supprimé!' }))
-        .catch(error => res.status(400).json({ message: 'Comment non supprimé' }));
       }else{
         res.status(403).json({ message: 'Suppression non autorisée!' });
       } 

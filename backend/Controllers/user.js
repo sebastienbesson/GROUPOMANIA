@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const fs = require('fs'); 
 
 require('dotenv').config();
 
@@ -18,38 +17,37 @@ exports.signup = (req, res, next) => {
           password: hash
         })
           .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-          .catch(error => {console.log('error', error);res.status(400).json({ message: 'email deja existant' })});
+          .catch(error => {console.log('error', error);res.status(400).json({ message: 'problème à la création du compte' })});
       })
-      .catch(error => {console.log('error', error);res.status(500).json({ message: 'pas bon' })});
+      .catch(error => {console.log('error', error);res.status(500).json({ message: 'erreur' })});
 };
 
 exports.login = (req, res, next) => {
-  console.log('email',req.body.email);
-  console.log('password',req.body.password);
-  models.User.findOne({ where: {email : req.body.email }})
-    .then(User => {
-      if (!User) {
+  models.User.findOne({ where: { email: req.body.email }})
+    .then(user => {
+      if (!user) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' });
       }
-      bcrypt.compare(req.body.password, User.password)
+      bcrypt.compare(req.body.password, user.password)
         .then(valid => {
           if (!valid) {
-            return res.status(401).json({ error: 'Mot de passe incorrect !' });
+            return res.status(401).json({message: 'Données incorrectes!'});
           }
-          {console.log('utilisateur trouvé');res.status(200).json({
-            userId: User.id,
+          res.status(200).json({
+            isAdmin: user.isAdmin,
+            userId: user.id,
+            message: 'utilisateur trouvé',
             token: jwt.sign(
-                { userId: User.id },
+              { userId: user.id,
+                isAdmin: user.isAdmin },
                 process.env.SECRET_CODE,
-                { expiresIn: '24h'}
-            ),
-            isAdmin: User.isAdmin
-          })};
+              { expiresIn: '24h' }),
+          });
         })
-        .catch(error => res.status(500).json({ message: 'erreur A' }));
+        .catch(error => res.status(500).json({ error }));
     })
-    .catch(error => res.status(500).json({ message : 'erreur B' }));
-};  
+    .catch(error => res.status(500).json({ error }));
+};
 
 exports.getUser = (req, res) => {
   models.User.findOne({ 
@@ -79,8 +77,8 @@ exports.modifyPassword = (req, res, next) => {
 						user.password = hash
 						user.email = req.body.email
 						user.save()
-							.then(() => res.status(201).json({ message: 'information(s) modifiée(s)!' }))
-							.catch(error => {console.log('error', error);res.status(400).json({ message: 'Erreur A' })});
+							.then(() => res.status(201).json({ message: 'Mot de passe modifié' }))
+							.catch(error => {console.log('error', error);res.status(400).json({ message: 'Erreur' })});
 					})
 				})
 			}else{
@@ -88,10 +86,10 @@ exports.modifyPassword = (req, res, next) => {
 				user.email = req.body.email
 				user.save()
 					.then(() => res.status(201).json({ message: 'Profil modifié!' }))
-					.catch(error => res.status(500).json({ error: 'ERREUR B' }));
+					.catch(error => res.status(500).json({ error: 'Erreur' }));
 			}
 		})
-		.catch(error => res.status(500).json({ error: 'ERREUR C' }));
+		.catch(error => res.status(500).json({ error: 'Erreur' }));
 };
 
 exports.modifyUser = async (req, res) => {
@@ -100,14 +98,12 @@ exports.modifyUser = async (req, res) => {
 		    {
 					...req.body,
 					contentUrl: `${req.protocol}://${req.get('host')}/images/${
-						req.file.filename
-					}`,
+						req.file.filename }`,
 			  } : { ...req.body };
         console.log(userObject);
       if (userObject.contentUrl) {
         const oldUser = await models.User.findOne({ where: { id: req.params.id } });
         const oldFile = oldUser.contentUrl.split('/images/')[1];
-        //fs.unlinkSync(`images/${oldFile}`);
       }
       const user = await models.User.update(userObject, {
         where: { id: req.params.id },
@@ -116,7 +112,7 @@ exports.modifyUser = async (req, res) => {
 		  if (!user) {
 			res.status(404).send();
 		}
-		res.status(200).json({ message: 'User modifié' });
+		res.status(200).json({ message: 'Information(s) modifiée(s)' });
 	  } catch (e) {
 		console.log(e);
 		res.status(500).send(e);
@@ -134,7 +130,7 @@ exports.deleteUser = (req, res, next) => {
         res.status(403).json({ message: 'Suppression non autorisée!' });
       }
 		})
-		.catch(error => {console.log('error', error);res.status(500).json({ message: 'Utilisateur non supprimé!' })});
+		.catch(error => {console.log('error', error);res.status(500).json({ message: 'Erreur' })});
 };
 
 

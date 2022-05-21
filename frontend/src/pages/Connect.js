@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Connect.css';
 
 async function loginUser(credentials) {
-  
+
   return fetch(`${process.env.REACT_APP_URL}/auth/login`, {
     method: 'POST',
     headers: {
@@ -17,6 +17,11 @@ async function loginUser(credentials) {
     localStorage.setItem('token', data.token);
     localStorage.setItem('userId', data.userId);
     localStorage.setItem('isAdmin', data.isAdmin);
+    if (data.token === undefined) {
+      alert("pas cool");
+      window.location = "./Connect";
+      localStorage.clear();
+    }
   })
 }
 
@@ -43,7 +48,6 @@ return(
   <div className="connect-wrapper">
     <h1>Connectez-vous!</h1>
     <form className="connect-form" onSubmit={handleSubmit}>
-      
       <label>
         <p>E-mail:</p>
         <input type="text" onChange={e => setEmail(e.target.value)} />
@@ -54,10 +58,7 @@ return(
       </label> 
       <div>
         <button className="connect-btn" type="submit">Connexion</button>
-        <p className='errorMsg'></p>
       </div>
-      
-      
     </form>
   </div> 
 )
