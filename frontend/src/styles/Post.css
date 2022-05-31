@@ -10,16 +10,7 @@
     flex-direction: column;
 }
 
-.post-wrapper-picture{
-    display: flex;
-    flex-direction: column;
-}
-
 .post-wrapper-text{
-    text-align: center !important;
-}
-
-.post-wrapper-text-picture{
     text-align: center !important;
 }
 
@@ -29,11 +20,6 @@
     font-weight: bold !important;
 }
 
-.post-name-text{
-    color: blackFD2D01 !important;
-    font-size: large !important;
-}
-
 .post-title{
     color: black !important;
     font-weight: bolder !important;
@@ -41,6 +27,8 @@
 .post-content{
     color: black !important;
     font-size: larger !important;
+    margin: 0% 5% 0% 5% !important;
+    overflow: scroll;
 }
 .post-date{
     color: black !important;
@@ -58,17 +46,6 @@
     color: white !important;
 }
 @media all and (min-width: 768px){
-    .post-wrapper-picture{
-        display: flex;
-        flex-direction: row;
-        margin: 5%;
-        text-align: center;
-        justify-content: space-between;
-    }
-    .post-wrapper-text-picture{
-        flex-direction: column;
-        text-align: left;
-    }
     img{
         width: 250px !important;
         height: 250px !important;

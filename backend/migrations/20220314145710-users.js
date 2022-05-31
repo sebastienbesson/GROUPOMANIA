@@ -3,7 +3,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     
-     return Promise.all([
+    return Promise.all([
       queryInterface.addColumn('users', 'contentUrl', {
         allowNull: false,
         type: Sequelize.STRING
@@ -13,6 +13,6 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     
-     return Promise.all([queryInterface.removeColumn('users', 'contentUrl')]);
+    return Promise.all([queryInterface.removeColumn('users', 'contentUrl')]);
   }
 };

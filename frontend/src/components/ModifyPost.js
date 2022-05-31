@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom"; 
+import '../styles/ModifyPost.css'; 
 
 const ModifyPost = () => {
     const [title, setTitle] = useState();
@@ -29,12 +30,11 @@ const ModifyPost = () => {
             setContent(resp.content)
             setContentUrl(resp.contentUrl)
           })
-        })
-      }
+      })
+    }
 
-      const handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-    
         const data = new FormData();
         data.append('title', title);
         data.append('content', content);
@@ -47,29 +47,26 @@ const ModifyPost = () => {
           },
           body: data,
         }).then((res) => console.log(res));
-      };
+    };
 
   return(
-    <div className="modifypost-wrapper">
+    <div>
+      <div className="modifypost-wrapper">
         <label>
-          <p>Changer le titre:</p><input type="text" onChange={e => setTitle(e.target.value)} />
+          <p>Changer le titre:</p><input className="modifypost-text" type="text" onChange={e => setTitle(e.target.value)} />
         </label>  
         <label>
-          <p>Changer le contenu:</p><input type="text" onChange={e => setContent(e.target.value)} />
+          <p>Changer le contenu:</p><input className="modifypost-text" type="text" onChange={e => setContent(e.target.value)} />
         </label>
         <label>
-          <p>Changer l'image:</p><input type="file" onChange={e => setContentUrl(e.target.files[0])} />
+          <p>Changer l'image:</p><input className="modifypost-img" type="file" onChange={e => setContentUrl(e.target.files[0])} />
         </label>
-      <p>Modification en cours</p>
-      <input type="text" value={title} onChange={(e) => {setTitle(e.target.value)}}/>
-      <input type="text" value={content} onChange={(e) => {setContent(e.target.value)}}/>
-      <input type="file"  onChange={(e) => {setContentUrl(e.target.files[0])}}/>
-      <button className="modifypost-btn" onClick={handleSubmit}>Valider</button>
-      <div className="modifypost-footer"><Link to="/Home">Retour</Link></div>
+        <button className="modifypost-btn" onClick={handleSubmit}>Valider</button>
+      </div>
+      <div className="modifycomment-footer"><Link to="/Home">Retour</Link></div>
     </div>
   )
-  }
+} 
   
-
 export default ModifyPost
 

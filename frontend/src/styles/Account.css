@@ -2,6 +2,7 @@
     width: 80%;
     margin: 10%;
     text-align: center;
+    padding: 5%;
     border: 1px #FD2D01 solid;
 }
 
@@ -9,11 +10,19 @@
     color: #FD2D01;
     font-size: large;
     font-weight: bold;
+    border: none;
+}
+
+.account-delete{
+    margin: 25px 0px !important;
+    width: 100% !important;
 }
 
 .account-delete-btn{
-    margin: 25px 0px !important;
-    width: 100% !important;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    border: none;
 }
 
 img{

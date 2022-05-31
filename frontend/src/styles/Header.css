@@ -25,12 +25,12 @@ nav{
 .header-link{
     font-size: large;
     font-weight: bold !important;
-    margin: 5% 5% 5% 5% !important;
+    margin: 5% !important;
 }
 .header-link-disconnect{
     font-size: large;
     font-weight: bold !important;
-    margin: 5% 5% 5% 5% !important;
+    margin: 5% !important;
 }
 a{
     color: #FD2D01 !important;
@@ -48,7 +48,7 @@ a{
     .header-link-disconnect{
         font-size: large;
         font-weight: bold !important;
-        margin: 5% 5% 5% 5% !important;
+        margin: 5% !important;
         width: 100%;
         margin-left: 40%;
         margin-right: 40%;

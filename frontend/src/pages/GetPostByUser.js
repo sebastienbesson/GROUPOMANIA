@@ -11,18 +11,14 @@ import '../styles/GetPostByUser.css';
 export default function GetPostByUser (data) {
     const [userIds, setUserIds] = useState([]);
     let {id} = useParams();
-    
     console.log(id);
-    localStorage.getItem('userId');
-    
+        
     useEffect(() => {
         axios
         .get(`${process.env.REACT_APP_URL}/posts/user?userId=${id}}`, {
-          method: 'GET',
-          headers: {
-            'Authorization':`Bearer ${localStorage.getItem('token')}`
-            },
-        body: data,
+            method: 'GET',
+            headers: { 'Authorization':`Bearer ${localStorage.getItem('token')}`},
+            body: data,
         })
         .then(response => {
             console.log(response.data);
@@ -41,8 +37,8 @@ export default function GetPostByUser (data) {
                         <div className="getpostbyuser-wrapper-text">
                             <div className="getpostbyuser-title">{post.title}</div>
                             <div className="getpostbyuser-date">Crée {moment(post.createdAt).fromNow()}</div>
-                            <div className="getpostbyuser-wrapper-link">
-                                <Link to={{pathname: `/getpostbyuser/${post.id}`}}>Voir le post</Link>
+                            <div>
+                                <Link to={{pathname: `/getpost/${post.id}`}}>Voir le post</Link>
                             </div>
                         </div> 
                     </div> 

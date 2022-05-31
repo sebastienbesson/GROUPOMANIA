@@ -47,78 +47,76 @@ exports.getAllPosts = (req, res, next) => {
 
 exports.getOnePost = (req, res, next) => {
   models.Post.findOne({ 
-      where: {id:req.params.id},
-      include: {
-        model: models.User,
-        attributes: ["userName"]
-      },
-    })
-    .then(function(post) {
+    where: {id:req.params.id},
+    include: {
+      model: models.User,
+      attributes: ["userName"]
+    },
+  })
+  .then(function(post) {
     if (post) {
       res.status(200).json(post);
     }else {
       res.status(404).json({"error": "pas de post trouvé"});
     }
-  }).catch(function(err) {
-      console.log(err);
-      res.status(500).json({"error": "champs non valides"});
+  })
+  .catch(function(err) {
+    console.log(err);
+    res.status(500).json({"error": "champs non valides"});
   });
 };
 
 exports.getAllPostsByUser = (req, res, next) => {
   models.Post.findAll({ 
-      where: {userId:req.query.userId},
-      include: {
-        model: models.User,
-        attributes: ["userName"]
-      },
-      order:[
-        ["createdAt","desc"]
-      ]
-    })
-    .then(function(posts) {
+    where: {userId:req.query.userId},
+    include: {
+      model: models.User,
+      attributes: ["userName"]
+    },
+    order:[
+      ["createdAt","desc"]
+    ]
+  })
+  .then(function(posts) {
     if (posts) {
       res.status(200).json(posts);
     }else {
       res.status(404).json({"error": "pas de posts trouvés pour cet user"});
     }
-  }).catch(function(err) {
-      console.log(err);
-      res.status(500).json({"error": "erreur"});
+  })
+  .catch(function(err) {
+    console.log(err);
+    res.status(500).json({"error": "erreur"});
   });
 };
 
 exports.modifyPost = (req, res, next) => {
-  console.log('req.userIdControllers', req.userId);
-  console.log('req.isAdminControllers', req.isAdmin);  
   const postObject = req.file ? 
-      { ...req.body.content,
-        contentUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-      } : { ...req.body };
-      models.Post.findOne({where: { id: req.params.id }})
-      .then(post  => {
-        if(post.userId === req.userId || req.isAdmin === true) {
-          models.Post.update(postObject, { where: { id: req.params.id }})
-          .then(() => res.status(200).json({ message: 'Post modifié !'}))
-        } else {
-          res.status(403).json({ message: 'Modification non autorisée!' });
-        }
-      })
-      .catch(error => {console.log('error', error);res.status(500).json({ message: 'Erreur' })});  
-  };
+  { ...req.body.content,
+    contentUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+  } : { ...req.body };
+  models.Post.findOne({where: { id: req.params.id }})
+  .then(post  => {
+  if(post.userId === req.userId || req.isAdmin === true) {
+    models.Post.update(postObject, { where: { id: req.params.id }})
+  .then(() => res.status(200).json({ message: 'Post modifié !'}))
+  } else {
+    res.status(403).json({ message: 'Modification non autorisée!' });
+  }
+  })
+  .catch(error => {console.log('error', error);res.status(500).json({ message: 'Erreur' })});  
+};
 
 exports.deleteOnePost = (req, res, next) => {
-  console.log('req.userIdControllers', req.userId);
-  console.log('req.isAdminControllers', req.isAdmin);
   models.Post.findOne({where: { id: req.params.id }})
-    .then(post  => {
-      if(post.userId === req.userId || req.isAdmin === true) {
-        models.Post.destroy({where : { id: req.params.id}})
-        .then(() => res.status(200).json({ message: 'Post supprimé !'}))
-      } else {
-        res.status(403).json({ message: 'Suppression non autorisée!' });
-      }
-    })
-    .catch(error => {console.log('error', error);res.status(500).json({ message: 'post non supprimé' })}); 
+  .then(post  => {
+  if(post.userId === req.userId || req.isAdmin === true) {
+    models.Post.destroy({where : { id: req.params.id}})
+    .then(() => res.status(200).json({ message: 'Post supprimé !'}))
+  } else {
+    res.status(403).json({ message: 'Suppression non autorisée!' });
+  }
+  })
+  .catch(error => {console.log('error', error);res.status(500).json({ message: 'post non supprimé' })}); 
 };
 

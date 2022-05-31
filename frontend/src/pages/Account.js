@@ -48,12 +48,12 @@ function Account() {
             <div>
               <Link to={{pathname: `/ChangePassword/${id}`}}>Changer mon mot de passe</Link> 
             </div>
-            <div className="account-delete-btn"><button onClick={()=>deleteUser(id)}>Supprimer mon compte</button></div>
+            <div className="account-delete"><button className="account-delete-btn" onClick={()=>deleteUser(id)}>Supprimer mon compte</button></div>
             <div>
-              <Link to="/Home">Retour Home</Link>
+              <Link to="/Home">Retour Accueil</Link>
             </div>  
         </div>
     )
-}
+} 
 
 export default Account

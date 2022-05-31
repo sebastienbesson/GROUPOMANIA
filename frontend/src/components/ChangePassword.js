@@ -37,7 +37,7 @@ function ChangePassword () {
     let user = {oldPassword,password}
     
     fetch(`${process.env.REACT_APP_URL}/auth/user/${id}}`,{
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
         'Content-type':'Application/json',
         'Authorization':`Bearer ${localStorage.getItem('token')}`
@@ -55,10 +55,10 @@ function ChangePassword () {
     <div className="change-password-wrapper">
       <h1>Changer mon mot de passe</h1>
         <label>
-          <p>Ancien mot de passe:</p><input type="text" onChange={e => setOldPassword(e.target.value)} />
+          <p>Ancien mot de passe:</p><input type="password" onChange={e => setOldPassword(e.target.value)} />
         </label>
         <label>
-          <p>Nouveau mot de passe:</p><input type="text" onChange={e => setPassword(e.target.value)} />
+          <p>Nouveau mot de passe:</p><input type="password" onChange={e => setPassword(e.target.value)} />
         </label>
         <button className="change-password-btn" onClick={upDatePassword}>Modifier</button>
         <div><Link to="/Account">Retour Compte</Link></div>
@@ -67,4 +67,3 @@ function ChangePassword () {
 }
 
 export default ChangePassword
-

@@ -1,0 +1,32 @@
+.modifyuseraccount-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5%;
+}
+
+.modifyuseraccount-img{
+    font-size: small;
+}
+
+.modifyuseraccount-btn{
+    margin: 25px 0px !important;
+    width: 100% !important;
+    background-color: #FD2D01;
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+    border: none;
+}
+
+@media all and (min-width: 768px){
+    .modifyuseraccount-img{
+        font-size: medium !important;
+    }
+}
+
+@media all and (max-width: 374px){
+    .modifyuseraccount-img{
+        font-size: x-small;
+    }
+}

@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
 import 'moment/locale/fr';
-
 import '../styles/GetPost.css';
 
 export default function GetPost (data) {
@@ -13,16 +12,13 @@ export default function GetPost (data) {
     let {id} = useParams();
     
     console.log(id);
-    localStorage.getItem('userId');
-    
+        
     useEffect(() => {
         axios
         .get(`${process.env.REACT_APP_URL}/posts/${id}}`, {
-          method: 'GET',
-          headers: {
-            'Authorization':`Bearer ${localStorage.getItem('token')}`
-            },
-        body: data,
+            method: 'GET',
+            headers: {'Authorization':`Bearer ${localStorage.getItem('token')}`},
+            body: data,
         })
         .then(response => {
             console.log(response.data);
@@ -30,7 +26,7 @@ export default function GetPost (data) {
                 response.data 
             )
         })
-      },[]);
+    },[]);
 
     const[postIds, setPostIds] = useState([]);
 
@@ -57,13 +53,13 @@ export default function GetPost (data) {
     console.log(userAdmin);
     
     function deletePost(id)
-        { fetch(`${process.env.REACT_APP_URL}/posts/${id}}`,{
+        {fetch(`${process.env.REACT_APP_URL}/posts/${id}}`,{
             method: 'DELETE',
             headers: {
                 'Content-type':'Application/json',
                 'Authorization':`Bearer ${localStorage.getItem('token')}`
             }
-        })
+            })
             .then((result) => {
                 result.json()
             .then((resp) => {
@@ -71,16 +67,16 @@ export default function GetPost (data) {
                 navigate("../Home")
             })
             })
-    }
+        }
     
     function deleteComment(id)
-        { fetch(`${process.env.REACT_APP_URL}/comments/${id}`,{
+        {fetch(`${process.env.REACT_APP_URL}/comments/${id}`,{
             method: 'DELETE',
             headers: {
                 'Content-type':'Application/json',
                 'Authorization':`Bearer ${localStorage.getItem('token')}`
-            },
-        })
+            }
+            })
             .then((result) => {
                 result.json()
             .then((resp) => {
@@ -88,19 +84,14 @@ export default function GetPost (data) {
             })
             })
         }
+
     const picture = post.contentUrl
     const user = post.userId
-    console.log(picture===null, currentUser==user ,userAdmin==true, userAdmin);
-    console.log('user', user);
-    console.log('currentUser', currentUser);
-    console.log('userAdmin', userAdmin);
-    console.log(picture);
-    console.log(picture===null && (currentUser==user || userAdmin==true));
 
     return(
         <div>
             <div className="getpost-wrapper-global">
-            {console.log(post)}
+                {console.log(post)}
                 {post &&(
                     <div className="getpost-wrapper">
                         <div className="getpost-wrapper-text">
@@ -111,16 +102,13 @@ export default function GetPost (data) {
                         </div>
                     </div> 
                 )}
-                {(picture!=="null") && (
+                {(picture!==null) && (
                     <div className="getpost-wrapper-img"><img src={post.contentUrl}/></div>
                 )}
-                <div>
-                    
-                    </div>
                 {(currentUser==user || userAdmin==true) && (
                     <div>
-                    <div className="getpost-delete"><button onClick={()=>deletePost(post.id)} className="getpost-delete-btn">Supprimer le post</button></div>
-                    <div className="getpost-footer"><Link to={{pathname: `/ModifyPost/${post.id}`}}>Modifier le post</Link></div>
+                        <div><button className="getpost-delete" onClick={()=>deletePost(post.id)}>Supprimer le post</button></div>
+                        <div className="getpost-footer"><Link to={{pathname: `/ModifyPost/${post.id}`}}>Modifier le post</Link></div>
                     </div>
                 )}
                 <div className="getpost-footer"><Link to={{pathname: `/CreateComment/${post.id}`}}>Créer un commentaire</Link></div>
@@ -132,8 +120,8 @@ export default function GetPost (data) {
                 <div>{postIds.map((comment) => (
                     <div className="getpost-comment-wrapper" key={comment.id}>
                         <div className="getpost-comment-wrapper-text">
-                            <div className="getpost-name">{comment.User.userName}:</div>
-                            <div className="getpost-comment">{comment.content}</div>
+                            <div className="getpost-comment-name">{comment.User.userName}:</div>
+                            <div className="getpost-comment-content">{comment.content}</div>
                             <div className="getpost-date">Crée {moment(comment.createdAt).fromNow()}</div>
                             <div className="getpost-date">Modifié {moment(comment.updatedAt).fromNow()}</div>
                         </div>
@@ -141,7 +129,7 @@ export default function GetPost (data) {
                         <div className="getpost-comment-wrapper-function">
                             {console.log((userAdmin==true || currentUser==comment.userId),userAdmin==true , currentUser==comment.userId)}
                             <div className="getpost-footer"><Link to={{pathname: `/ModifyComment/${comment.id}`}}>Modifier le commentaire</Link></div>
-                            <div><button className="getpost-delete-btn" onClick={()=>deleteComment(comment.id)}>Supprimer le commentaire</button></div> 
+                            <div><button className="getpost-delete" onClick={()=>deleteComment(comment.id)}>Supprimer le commentaire</button></div> 
                         </div>  
                         )}    
                         <div className="getpost-footer">

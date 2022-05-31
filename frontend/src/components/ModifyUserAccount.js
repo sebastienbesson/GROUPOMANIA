@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import '../styles/ModifyUserAccount.css';
 
-  const ModifyUserAccount = () => {
+const ModifyUserAccount = () => {
     const [ userName, setUserName] = useState();
     const [ contentUrl, setContentUrl ] = useState();
+    const navigate = useNavigate();
     let {id} = useParams();
+    console.log(id);
 
     useEffect (() => {
       getOneUser();
@@ -31,7 +34,6 @@ import { Link } from "react-router-dom";
 
     const handleSubmit = (e) => {
       e.preventDefault();
-  
       const data = new FormData();
       data.append('userName', userName);
       data.append('contentUrl', contentUrl);
@@ -41,24 +43,25 @@ import { Link } from "react-router-dom";
           'Authorization':`Bearer ${localStorage.getItem('token')}`
         },
         body: data,
-      }).then((res) => console.log(res));
+      }).then((res) => {
+        console.log(res)
+        navigate("../Account")
+      });
     };
   
   return(
-    <div className="modifypost-wrapper">
-       <label>
+    <div className="modifyuseraccount-wrapper">
+        <label>
           <p>Changer le nom:</p><input type="text" onChange={e => setUserName(e.target.value)} />
         </label>
         <label>
-          <p>Changer l'image:</p><input type="file" onChange={e => setContentUrl(e.target.files[0])} />
+          <p>Changer l'image:</p><input className="modifyuseraccount-img" type="file" onChange={e => setContentUrl(e.target.files[0])} />
         </label>
-      <p>Modification en cours</p>
-      <input type="text" value={userName} onChange={(e) => {setUserName(e.target.value)}}/>
-      <input type="file"  onChange={(e) => {setContentUrl(e.target.files[0])}}/>
-      <button className="modifypost-btn" onClick={handleSubmit}>Valider</button>
-      <div className="modifypost-footer"><Link to="/Account">Retour</Link></div>
+        <button className="modifyuseraccount-btn" onClick={handleSubmit}>Modifier</button>
+        <div><Link to="/Account">Retour Compte</Link></div>
     </div>
   )
-  }
+}
 
 export default ModifyUserAccount
+

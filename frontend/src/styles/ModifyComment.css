@@ -1,10 +1,32 @@
 .modifycomment-wrapper{
+    display: flex;
     flex-direction: column;
-    text-align: center !important;
+    padding: 5%;
 }
-.modifycomment-footer{
-    margin: 5%;
+
+.modifycomment-text{
+    width: 100% !important;
+    border: none;
+    background-color: #ead1cc;
 }
+
 .modifycomment-btn{
-    margin: 5% !important;
+    margin: 25px 0px !important;
+    width: 100% !important;
+    background-color: #FD2D01;
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+    border: none;
+}
+
+.modifycomment-footer{
+    display: flex;
+    flex-direction: column;
+    padding: 5%;
+}
+
+a{
+    color: white;
+    margin: auto;
 }

@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { Component } from "react";
 import Post from "../components/Post.js";
 import { Link } from "react-router-dom";
-
 import '../styles/Home.css';
 
 export default class Home extends Component{
@@ -19,7 +18,7 @@ export default class Home extends Component{
         headers: {
           'Content-type':'Application/json',
           'Authorization':`Bearer ${localStorage.getItem('token')}`
-          },
+        }, 
       })
       .then((response) => {
         const posts = [];
@@ -36,12 +35,12 @@ export default class Home extends Component{
     this.setState({selectedPostId: id,});
   }
   render(){
-    const posts = this.state.posts.map((post) => {
-      return <Post key={post.id} post={post} postclicked={this.onPostClickHandler.bind(
-        this,
-        post.id,
-      )}/>
-    })
+      const posts = this.state.posts.map((post) => {
+        return <Post key={post.id} post={post} postclicked={this.onPostClickHandler.bind(
+          this,
+          post.id,
+        )}/>
+      })
     return(
       <div> 
         <div className="home-header">

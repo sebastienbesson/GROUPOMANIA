@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Connect.css';
 
@@ -17,8 +16,9 @@ async function loginUser(credentials) {
     localStorage.setItem('token', data.token);
     localStorage.setItem('userId', data.userId);
     localStorage.setItem('isAdmin', data.isAdmin);
+    localStorage.setItem('userName', data.userName);
     if (data.token === undefined) {
-      alert("pas cool");
+      alert("Problème d'identifiant! Veuillez réessayer");
       window.location = "./Connect";
       localStorage.clear();
     }
@@ -27,6 +27,7 @@ async function loginUser(credentials) {
 
 let id = localStorage.getItem('userId');
 let isAdmin = localStorage.getItem('isAdmin');
+let userName = localStorage.getItem('userName');
 console.log(isAdmin);
 
 export default function Connect({ setToken }) {
@@ -37,6 +38,7 @@ export default function Connect({ setToken }) {
   const handleSubmit = async e => {
       e.preventDefault();
       const token = await loginUser({
+        userName,
         email,
         password,
         id, 
@@ -44,25 +46,22 @@ export default function Connect({ setToken }) {
       })
       navigate("/Home");
     }
-return(
-  <div className="connect-wrapper">
-    <h1>Connectez-vous!</h1>
-    <form className="connect-form" onSubmit={handleSubmit}>
-      <label>
-        <p>E-mail:</p>
-        <input type="text" onChange={e => setEmail(e.target.value)} />
-      </label>
-      <label>
-        <p>Mot de passe:</p>
-        <input type="password" onChange={e => setPassword(e.target.value)} />
-      </label> 
-      <div>
-        <button className="connect-btn" type="submit">Connexion</button>
-      </div>
-    </form>
-  </div> 
-)
-}
-Connect.propTypes = {
-    setToken: PropTypes.func.isRequired
+  return(
+    <div className="connect-wrapper">
+      <h1>Connectez-vous!</h1>
+      <form className="connect-form" onSubmit={handleSubmit}>
+        <label>
+          <p>E-mail:</p>
+          <input type="text" onChange={e => setEmail(e.target.value)} />
+        </label>
+        <label>
+          <p>Mot de passe:</p>
+          <input type="password" onChange={e => setPassword(e.target.value)} />
+        </label> 
+        <div>
+          <button className="connect-btn" type="submit">Connexion</button>
+        </div>
+      </form>
+    </div> 
+  )
 }

@@ -47,12 +47,14 @@ function ModifyComment () {
     })
   }
   return(
-    <div className="modifycomment-wrapper">
-      <label>
+    <div>
+      <div className="modifycomment-wrapper">
+        <label>
           <p>Nouveau commentaire:</p>
           <input type="text" className="modifycomment-text" onChange={e => setContent(e.target.value)} />
-      </label>
-      <div className="modifycomment-btn"><button onClick={upDateComment}>Modifier</button></div>
+        </label>
+        <button className="modifycomment-btn" onClick={upDateComment}>Modifier</button>
+      </div>
       <div className="modifycomment-footer"><Link to="/Home">Retour</Link></div>
     </div>
   )

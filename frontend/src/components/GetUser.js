@@ -3,7 +3,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
 import '../styles/GetUser.css';
 
 export default function GetUser (data) {
@@ -11,7 +10,6 @@ export default function GetUser (data) {
     let {id} = useParams();
     
     console.log(id);
-    localStorage.getItem('userId');
     
     useEffect(() => {
         axios
